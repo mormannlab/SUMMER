@@ -8,7 +8,7 @@ open_cmd = "open"
 fig_names = {
     "overview": "figure_data_overview",
     "sorting": "figure_spike_sorting",
-    "annotations": "figure_annotations",
+    "annotations": "figure_annotations_overview",
 
 }
 

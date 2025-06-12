@@ -101,6 +101,12 @@ def get_aligned_annotation(data_dir, patient_id, label_name, key):
 
     return starts, stops
 
+def load_patient(data_dir, patient_id,):
+    path = Path(data_dir, f"sub{int(patient_id)}.nwb")
+    io = NWBHDF5IO(path, mode="r")
+    nwbfile = io.read()
+    return nwbfile
+
 #####
 # Collection across patients
 #####

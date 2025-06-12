@@ -28,7 +28,7 @@ rc('ytick', labelsize=ticklabelsize)
 # set global font to be Helvetica
 current_dir = os.path.dirname(__file__)
 helvetica_path = os.path.join(current_dir, 'fonts', 'Helvetica.ttf')
-font = fm.FontProperties(fname=helvetica_path)
+font_prop = fm.FontProperties(fname=helvetica_path)
+print("Loaded font name:", font_prop.get_name())
 fm.fontManager.addfont(helvetica_path)
-font = {'family': 'Helvetica'}
-rc('font', **font)
+rc('font', family=font_prop.get_name())

@@ -19,16 +19,16 @@ character_light1 = sns.color_palette("rocket", n_colors=9)[6]
 character_light2 = sns.color_palette("rocket", n_colors=9)[7]
 
 # SIZE FIGURE
-figure_x = 12
-figure_y = 7
+figure_x = 14
+figure_y = 8
 
 # PLOTS - BARS
 capsize_err = 6
-fontsize_labels_bar = 24
+fontsize_labels_bar = 22
 
 # X AXIS
 x_fontsize_label = 30
-x_fontsize_tick_labels = 30
+x_fontsize_tick_labels = 38
 
 # Y AXIS
 y_labelpad = 10
@@ -36,7 +36,7 @@ y_fontsize_label = 38
 y_fontsize_tick_labels = 24
 
 # GENERAL
-fontsize_legend = 22
+fontsize_legend = 26
 frameon_legend = False
 linewidth_spines = 5
 tick_length = 12

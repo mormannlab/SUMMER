@@ -2,17 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
-
-config_path = "/home/wiss/gerkenf/CODE/dhv_dataset/plot_code/decoding_results/FIGURE_SUBREGIONS"
-sys.path.append(config_path)
+import seaborn as sns
 
 import config_characters as config
+import config_colors as config_colors
 print(f"Fontsize Labels Bar: {config.capsize_err}")
 
 def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
 
     # Define colors
-    colors = [config.character_color, config.character_dark1, config.character_dark2, config.character_light1, config.character_light2]
+    colors = [config_colors.color_by_region["A"], config_colors.color_by_region["H"], config_colors.color_by_region["EC"], config_colors.color_by_region["PHC"], config_colors.color_by_region["PIC"]]
 
     # Define x-axis
     labels=['All', 'A', 'H', 'EC', 'PHC']
@@ -41,16 +40,14 @@ def regional_differences(values, values_err, metric, buffer, label_names, title,
     # If metric AUROC, plot baseline=0.5
     if metric=="AUROC":
         plt.hlines(y=0.5, xmin=-0.5, xmax=len(label_names)-0.5, color='black', label='Chance Level')
-
-    # Add some text for labels, title and custom x-axis tick labels, etc.
     
     # X AXIS
     ax.set_xticks(x)
-    ax.set_xticklabels(label_names, weight='bold', color=config.character_color)
+    ax.set_xticklabels(label_names, weight='bold')
     ax.tick_params(axis='x', labelsize=config.x_fontsize_tick_labels, length=config.tick_length, width=config.tick_width)
 
     # Y AXIS
-    yaxis = f"Decoding \n Performance \n [{metric}]"
+    yaxis = f"Decoding Performance \n [{metric}]"
     ax.set_ylabel(yaxis, fontsize=config.y_fontsize_label, labelpad=config.y_labelpad)
     ax.tick_params(axis='y', color='black', labelsize=config.y_fontsize_tick_labels, length=config.tick_length, width=config.tick_width)
 

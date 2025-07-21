@@ -8,9 +8,10 @@ import seaborn as sns
 config_path = "/home/wiss/gerkenf/CODE/dhv_dataset/plot_code/decoding_results/decoding_results/config_LogReg.py"
 sys.path.append(config_path)
 
+config_colors "/home/wiss/gerkenf/CODE/dhv_dataset/plot_code/config_colors.py"
+
 import config_LogReg as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
-
 
 def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0):
     

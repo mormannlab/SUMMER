@@ -5,20 +5,20 @@ import sys
 import os
 import seaborn as sns
 
-config_path = "/home/wiss/gerkenf/CODE/dhv_dataset/plot_code/decoding_results/decoding_results/config_LogReg.py"
-sys.path.append(config_path)
-
-config_colors "/home/wiss/gerkenf/CODE/dhv_dataset/plot_code/config_colors.py"
-
-import config_LogReg as config
+import config_decoding as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
+
+import config_colors as config_colors
 
 def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0):
     
     # COLORS FULL
-    color_character = config.character_color
-    color_transition = config.transitions_color
-    color_location = config.location_color
+    #color_character = config.character_color
+    color_character = config_colors.colors[0]
+    #color_transition = config.transitions_color
+    color_transition = config_colors.colors[3]
+    #color_location = config.location_color
+    color_location = config_colors.colors[4]
     colors_full = [color_character,color_character,color_character,color_character,color_transition,color_transition,color_location,color_location]
 
     x = np.arange(len(labels))  # the label locations

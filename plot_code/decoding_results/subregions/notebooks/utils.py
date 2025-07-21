@@ -11,12 +11,11 @@ print(f"Fontsize Labels Bar: {config.capsize_err}")
 def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
 
     # Define colors
-    colors = [config_colors.color_by_region["A"], config_colors.color_by_region["H"], config_colors.color_by_region["EC"], config_colors.color_by_region["PHC"], config_colors.color_by_region["PIC"]]
+    colors = [config_colors.colors[0], config_colors.color_by_region["A"], config_colors.color_by_region["H"], config_colors.color_by_region["EC"], config_colors.color_by_region["PHC"]]
 
     # Define x-axis
     labels=['All', 'A', 'H', 'EC', 'PHC']
     
-
     if fig_x is None and fig_y is None:
         fig, ax = plt.subplots(figsize=(config.figure_x, config.figure_y))
     else:
@@ -43,7 +42,7 @@ def regional_differences(values, values_err, metric, buffer, label_names, title,
     
     # X AXIS
     ax.set_xticks(x)
-    ax.set_xticklabels(label_names, weight='bold')
+    ax.set_xticklabels(label_names, weight='bold', color=config_colors.colors[0])
     ax.tick_params(axis='x', labelsize=config.x_fontsize_tick_labels, length=config.tick_length, width=config.tick_width)
 
     # Y AXIS

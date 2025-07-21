@@ -3,19 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-config_path = "/usr/wiss/gerkenf/DHV/Spikes2Frames_Paper/paper/collection/UPDATED_DATASET/FIGURE_DECODING"
-sys.path.append(config_path)
-
 import config_buffer as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
+
+import config_colors as config_colors
 
 
 def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, save_path):
     # Define colors
-    colors=[config.grey_color, config.character_color]
+    colors=[config.grey_color, config_colors.colors[0]]
 
     x = np.arange(len(labels))  # the label locations
-    #x = np.arange(12)  # the label locations
     width = 0.8  # the width of the bars
     print(f'X: {x-width/2}')
     print(f'Type of : {width/2}')
@@ -36,9 +34,6 @@ def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, sav
 
     fig, ax = plt.subplots(figsize=(config.figure_x, config.figure_y))#(figsize=(25, 10))
 
-    # define grey color
-    color='0.4'
-
     # plot bars
     for i in range(len(labels)):
         if labels[i] == '32':
@@ -46,11 +41,6 @@ def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, sav
         else:
             bar = ax.bar(x[i], values[i][idx], yerr=values_err[i][idx], width=width, color=colors[0], capsize=config.capsize_err)
         ax.bar_label(container=bar, labels=[f"{np.round(values[i][idx],2)}"], padding=5, fontsize=config.fontsize_labels_bar)
-
-    # if baseline not none
-    #plt.hlines(y=0, xmin=-0.5 , xmax=len(labels), label='Chance \nLevel', color='dimgrey', linewidth=5)
-
-    # Add some text for labels, title and custom x-axis tick labels, etc.
     
     # X AXIS
     ax.set_xlabel('Temporal Gaps [sec]', fontsize=config.x_fontsize_label, labelpad=config.labelpad)

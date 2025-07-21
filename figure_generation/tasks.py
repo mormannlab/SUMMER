@@ -10,6 +10,7 @@ fig_names = {
     "sorting": "figure_spike_sorting",
     "annotations": "figure_annotations_overview",
     "decoding": "figure_decoding_results",
+    "annotations_vis": "figure_annotations_vis",
 
 }
 

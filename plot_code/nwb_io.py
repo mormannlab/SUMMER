@@ -58,7 +58,7 @@ def get_patient_spiking_activity(data_dir, patient_id, exclude_waveforms=False):
     
     return df_units
 
-def get_patient_unit(df_units, unit_id, exclude_waveforms=True, ):
+def get_unit_from_patient_spiking_activity(df_units, unit_id, exclude_waveforms=True, ):
     """
     Extracts spike times (and optionally waveforms) for a specific unit of a recorded session.
 

@@ -24,25 +24,25 @@ transitions_color_light = sns.light_palette(transitions_color, n_colors=5)[1]
 location_color_light = sns.light_palette(location_color, n_colors=5)[1]
 
 # SIZE FIGURE
-figure_x = 11.5
-figure_y = 7
+figure_x = 30
+figure_y = 9
 
 # PLOTS - BARS
 capsize_err = 8
-fontsize_labels_bar = 20
+fontsize_labels_bar = 32
 
 # X AXIS
 x_fontsize_label = 32
-x_fontsize_tick_labels = 20
+x_fontsize_tick_labels = 34
 
 # Y AXIS
 y_labelpad = 20
-y_fontsize_label = 32
-y_fontsize_tick_labels = 26
+y_fontsize_label = 44
+y_fontsize_tick_labels = 36
 
 # GENERAL
 fontsize_legend = 26
 frameon_legend=False
-linewidth_spines = 4
-tick_length = 10
+linewidth_spines = 6
+tick_length = 16
 tick_width = 4

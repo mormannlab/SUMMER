@@ -9,6 +9,7 @@ fig_names = {
     "overview": "figure_data_overview",
     "sorting": "figure_spike_sorting",
     "annotations": "figure_annotations_overview",
+    "SU": "figure_responsive_units",
     "decoding": "figure_decoding_results",
     "annotations_vis": "figure_annotations_vis",
 

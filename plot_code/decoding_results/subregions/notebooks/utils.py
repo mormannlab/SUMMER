@@ -8,7 +8,7 @@ import config_characters as config
 import config_colors as config_colors
 print(f"Fontsize Labels Bar: {config.capsize_err}")
 
-def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
+def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, save_name, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
 
     # Define colors
     colors = [config_colors.colors[0], config_colors.color_by_region["A"], config_colors.color_by_region["H"], config_colors.color_by_region["EC"], config_colors.color_by_region["PHC"]]
@@ -75,4 +75,4 @@ def regional_differences(values, values_err, metric, buffer, label_names, title,
         name= 'auroc'
     
     #os.makedirs(os.path.join(save_path, f"BUFFER{buffer}"), exist_ok=True)
-    plt.savefig(fname=os.path.join(save_path, f"regional_differences_summer.jpg"), dpi=600)
+    plt.savefig(fname=os.path.join(save_path, f"{save_name}.jpg"), dpi=600)

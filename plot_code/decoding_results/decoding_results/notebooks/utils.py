@@ -10,7 +10,7 @@ print(f"Fontsize Labels Bar: {config.capsize_err}")
 
 import config_colors as config_colors
 
-def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0):
+def plot_decoding(values, values_err, metric, labels, save_path, font, ymin=0, ymax=1.0):
     
     # COLORS FULL
     #color_character = config.character_color
@@ -42,11 +42,11 @@ def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.
         bar1 = ax.bar(x[i], values[i][idx], yerr=values_err[i][idx], width=width, color=colors_full[i], capsize=capsize)
         
         if i in [4,5]:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar, fontproperties=font)
         elif i in [0]:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=20, fontsize=config.fontsize_labels_bar)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=20, fontsize=config.fontsize_labels_bar, fontproperties=font)
         else:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar, fontproperties=font)
 
     # X AXIS
     #ax.set_xlabel("Label", labelpad=config.y_labelpad, fontsize=config.x_fontsize_label)
@@ -57,9 +57,9 @@ def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.
     i=0
     for tick in ax.get_xaxis().get_major_ticks():
         if i%2==0:
-            tick.set_pad(8.)
+            tick.set_pad(12.)
         else:
-            tick.set_pad(35.)
+            tick.set_pad(45.)
         i+=1
 
     # YAXIS

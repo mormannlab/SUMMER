@@ -18,7 +18,7 @@ from tqdm import tqdm
 
 from pynwb import NWBHDF5IO
 
-target_regions = ["A", "AH", "MH", "PH", "M", "EC", "PHC", 'PHC', 'APH', 'MPH', 'PPH', "FF", "LG", "PRC", "PIC"]
+target_regions = ["A", "AH", "MH", "PH", "M", "EC", "PHC", 'PHC', 'APH', 'MPH', 'PPH', "Other"]
 
 replacement_regions = {
     "AH": "H",
@@ -30,7 +30,7 @@ replacement_regions = {
     "PPH": "PHC"
 }
 
-final_regions = ["A", "EC", "H", "PHC", "PIC", "LG", "FF", "PRC"]
+final_regions = ["A", "EC", "H", "PHC", "Other"]
 
 def create_data_overview(data_dir):
     """

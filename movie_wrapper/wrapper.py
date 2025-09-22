@@ -65,5 +65,4 @@ def wrapper_hd(frame_number):
     elif frame_number >= 125730:
         new_frame_number = -1
         
-
     return new_frame_number

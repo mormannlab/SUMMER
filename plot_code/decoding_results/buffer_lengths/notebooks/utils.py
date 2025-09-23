@@ -7,6 +7,7 @@ import config_buffer as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
 
 import config_colors as config_colors
+from config_plot_params import *
 
 
 def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, save_path):

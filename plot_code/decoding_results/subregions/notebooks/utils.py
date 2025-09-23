@@ -6,7 +6,16 @@ import seaborn as sns
 
 import config_characters as config
 import config_colors as config_colors
-print(f"Fontsize Labels Bar: {config.capsize_err}")
+from config_plot_params import *
+
+from matplotlib import font_manager as fm
+# set global font to be Helvetica
+current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+helvetica_path = os.path.join(current_dir, 'fonts', 'Helvetica-Bold.ttf')
+font_prop = fm.FontProperties(fname=helvetica_path)
+print("Loaded font name:", font_prop.get_name())
+fm.fontManager.addfont(helvetica_path)
+rc('font', family=font_prop.get_name())
 
 def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, save_name, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
 

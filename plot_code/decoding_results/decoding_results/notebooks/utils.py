@@ -9,8 +9,18 @@ import config_decoding as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
 
 import config_colors as config_colors
+from config_plot_params import *
 
-def plot_decoding(values, values_err, metric, labels, save_path, font, ymin=0, ymax=1.0):
+from matplotlib import font_manager as fm
+# set global font to be Helvetica
+current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+helvetica_path = os.path.join(current_dir, 'fonts', 'Helvetica-Bold.ttf')
+font_prop = fm.FontProperties(fname=helvetica_path)
+print("Loaded font name:", font_prop.get_name())
+fm.fontManager.addfont(helvetica_path)
+rc('font', family=font_prop.get_name())
+
+def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0):
     
     # COLORS FULL
     #color_character = config.character_color
@@ -42,11 +52,11 @@ def plot_decoding(values, values_err, metric, labels, save_path, font, ymin=0, y
         bar1 = ax.bar(x[i], values[i][idx], yerr=values_err[i][idx], width=width, color=colors_full[i], capsize=capsize)
         
         if i in [4,5]:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar, fontproperties=font)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar)
         elif i in [0]:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=20, fontsize=config.fontsize_labels_bar, fontproperties=font)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=20, fontsize=config.fontsize_labels_bar)
         else:
-            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar, fontproperties=font)
+            plt.bar_label(container=bar1, labels=[np.round(values[i][idx],2)], padding=5, fontsize=config.fontsize_labels_bar)
 
     # X AXIS
     #ax.set_xlabel("Label", labelpad=config.y_labelpad, fontsize=config.x_fontsize_label)

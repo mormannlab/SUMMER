@@ -152,6 +152,34 @@ def collect_all_spike_data_in_region(data_dir, region, region_name_dict=REGION_A
         
     return df_region_restricted_units
 
+def collect_all_annotation_data(data_dir, label):
+    i = 0
+    
+    for path in tqdm(list(data_dir.glob("*.nwb"))):
+        print(path)
+        if path.is_dir():
+            continue 
+
+        patient_id = int(path.name.split(".")[0][3:])
+        print(f"  {patient_id}")
+        io = NWBHDF5IO(path, mode="r")
+        nwbfile = io.read()
+        
+        df_a = nwbfile.stimulus["annotations_patient_aligned"].to_dataframe()
+        df_a = df_a[df_a["label_name"] == label]
+        assert len(df_a) > 0, f"No entries for label '{label}' found."
+        df_a["patient_id"] = [int(patient_id)] * len(df_a)
+
+        if i == 0:
+            df_annotation = df_a.copy()
+        else:
+            df_annotation = pd.concat([df_annotation, df_a], ignore_index=True)
+
+        io.close()
+        i += 1
+
+    return df_annotation
+
 def collect_psth_data(data_dir, region, label, region_name_dict=REGION_ALTERNATIVE_NAMES, drop_waveforms=True):
     """
     Collect unitwise data from NWB files for a given region, along with the annotation 

@@ -51,7 +51,11 @@ def regional_differences(values, values_err, metric, buffer, label_names, title,
     
     # X AXIS
     ax.set_xticks(x)
-    ax.set_xticklabels(label_names, weight='bold', color=config_colors.colors[0])
+    if label_names[0]=="Summer":
+        color_title = config_colors.colors[0]
+    elif label_names[0]=="Scene Cuts":
+        color_title = config_colors.colors[4]
+    ax.set_xticklabels(label_names, weight='bold', color=color_title)
     ax.tick_params(axis='x', labelsize=config.x_fontsize_tick_labels, length=config.tick_length, width=config.tick_width)
 
     # Y AXIS

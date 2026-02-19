@@ -5,7 +5,7 @@ PyTorch Lightning training pipeline for DHV NWB binned spike data: next-bin pred
 ---
 
 <p align="center">
-  <img src="fig/header.png" width="500" alt="Data overview: stimulus frames and neural raster" />
+  <img src="fig/data_overview.png" width="500" alt="Data overview: stimulus frames and neural raster" />
 </p>
 
 *To generate the header image, place `frames.png` and `raster.png` in `data_loading/` and run:*  

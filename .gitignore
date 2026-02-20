@@ -6,3 +6,7 @@ __pycache__/
 */__pycache__/
 *.pyc
 *.pyo
+*.ipynb
+.devcontainer/*
+lightning_logs/*
+*.env

@@ -32,43 +32,26 @@ def load_nwb(patient, data_dir_override=None):
 def get_movie_edges(nwb_data, bin_length):
     """
     Get movie edges from the NWB data for the requested bin length (ms).
-    Uses 40ms edges as base; for larger bin_length subsamples so each bin spans
-    bin_length (e.g. 80ms -> every 2nd 40ms edge). Stored 100ms edges are used
-    when bin_length is 100.
+    Reads edges directly from movie_binning_info for that bin_length.
 
     Parameters:
         nwb_data: Loaded NWB object.
-        bin_length (float): Bin length in ms (e.g. 40, 80, 100).
+        bin_length (float): Bin length in ms (e.g. 40, 80, 200, 480, 1000).
 
     Returns:
         np.ndarray: Movie edges for histogram binning.
     """
-    df_nwb = nwb_data.stimulus['movie_binning_info'].to_dataframe()
-    edges_40 = df_nwb.loc[df_nwb['bin_length'] == 40]['edges'].values[0]
-    if isinstance(edges_40, np.ndarray):
-        pass
-    else:
-        edges_40 = np.asarray(edges_40)
-
-    if bin_length < 40:
-        # Subdivision is handled in binning.py
-        movie_edges = edges_40
-    elif bin_length == 40:
-        movie_edges = edges_40
-    elif bin_length == 100:
-        movie_edges = df_nwb.loc[df_nwb['bin_length'] == 100]['edges'].values[0]
-        if not isinstance(movie_edges, np.ndarray):
-            movie_edges = np.asarray(movie_edges)
-    else:
-        # 80, 120, etc.: subsample 40ms edges so each bin spans bin_length ms
-        # 80ms -> step 2, 120ms -> step 3
-        if bin_length % 40 != 0:
-            raise ValueError(
-                f"bin_length must be a multiple of 40 (ms); got {bin_length}. "
-                "Supported: 40, 80, 100, 120, ..."
-            )
-        step = int(bin_length // 40)
-        movie_edges = edges_40[::step]
+    df_nwb = nwb_data.processing["movie_binning"].data_interfaces["movie_binning_info"].to_dataframe()
+    matches = df_nwb.loc[df_nwb["bin_length"] == bin_length]
+    if len(matches) == 0:
+        available = df_nwb["bin_length"].unique().tolist()
+        raise ValueError(
+            f"bin_length {bin_length} not found in movie_binning_info. "
+            f"Available: {available}"
+        )
+    movie_edges = matches["edges"].values[0]
+    if not isinstance(movie_edges, np.ndarray):
+        movie_edges = np.asarray(movie_edges)
     print(f"Movie edges: {movie_edges.shape} (bin_length={bin_length} ms)")
     return movie_edges
 
@@ -140,6 +123,113 @@ def get_binned_spikes_nwb(patient, units, bin_length, data_dir_override=None):
     )
     
     return binned_spikes_patient
+
+# Bin lengths for which frame numbers exist in movie_binning (one frame per bin)
+MOVIE_BINNING_BIN_LENGTHS = (40, 80, 200, 480, 1000)
+
+
+def _frame_string_to_number(frame_str):
+    """Extract 1-based frame number from string like 'frame_0001.png' -> 1."""
+    # Format: something_<digits>.png -> int(digits)
+    part = frame_str.split("_")[1][:-4]
+    return int(part)
+
+
+def _get_movie_frames_for_bin_length(nwb_data, bin_length):
+    """
+    Get the array of frame identifiers for the given bin_length from movie_binning.
+    Returns (frame_numbers, n_bins) where frame_numbers are 1-based, or (None, None) if not available.
+    """
+    if "movie_binning" not in nwb_data.processing:
+        return None, None
+    try:
+        iface = nwb_data.processing["movie_binning"].data_interfaces["movie_binning_info"]
+    except KeyError:
+        return None, None
+    df = iface.to_dataframe()
+    # Prefer exact match; bin_length in file may be int (40, 80, ...)
+    matches = df.loc[df["bin_length"] == bin_length]
+    if len(matches) == 0:
+        return None, None
+    frames = matches["frames"].values[0]
+    if hasattr(frames, "__len__") and not isinstance(frames, (str, bytes)):
+        frames = np.asarray(frames).ravel()
+    else:
+        frames = np.asarray([frames])
+    # Parse to 1-based frame numbers
+    frame_numbers = np.array([_frame_string_to_number(str(f)) for f in frames], dtype=np.int64)
+    return frame_numbers, len(frame_numbers)
+
+
+def get_annotation_labels_nwb(patient, label_name, bin_length, data_dir_override=None):
+    """
+    Load annotation indicator function for a label and align to bin indices.
+
+    When movie_binning provides frame numbers for this bin_length (40, 80, 200, 480, 1000 ms),
+    each bin is mapped to its corresponding frame; the indicator is indexed by frame number
+    (frames are 1-based, so indicator index = frame_number - 1). This yields one label per bin
+    with the same length as the binned spike vector. If frame mapping is not available,
+    falls back to proportional resampling.
+
+    Parameters:
+        patient (str): The patient ID.
+        label_name (str): Label to load (e.g. "summer", "alison").
+        bin_length (float): Bin length in ms (must match the one used for binned spikes).
+        data_dir_override (str, optional): Directory containing NWB files.
+
+    Returns:
+        tuple: (labels, n_classes) where labels is np.ndarray of shape (n_bins,) with
+               integer class indices in [0, n_classes-1], and n_classes is the number
+               of unique classes.
+    """
+    nwb_data, _ = load_nwb(patient, data_dir_override=data_dir_override)
+    movie_edges = get_movie_edges(nwb_data, bin_length)
+    n_bins = len(movie_edges) - 1
+
+    if "movie_annotations_indicator_functions" not in nwb_data.processing:
+        raise KeyError(
+            "NWB file has no processing['movie_annotations_indicator_functions']; "
+            "cannot load annotation labels."
+        )
+    iface = nwb_data.processing["movie_annotations_indicator_functions"].data_interfaces[
+        "movie_annotations_indicator_functions"
+    ]
+    df = iface.to_dataframe()
+    rows = df[df["label_name"] == label_name]
+    if len(rows) == 0:
+        raise ValueError(
+            f"Label '{label_name}' not found in movie_annotations_indicator_functions. "
+            f"Available: {df['label_name'].unique().tolist()}"
+        )
+    indicator = rows["indicator_function"].values[0]
+    if hasattr(indicator, "__len__") and not isinstance(indicator, (str, bytes)):
+        indicator = np.asarray(indicator).ravel()
+    else:
+        indicator = np.asarray([indicator])
+
+    # Prefer frame-based indexing when movie_binning has frames for this bin_length
+    frame_numbers, n_frames = _get_movie_frames_for_bin_length(nwb_data, bin_length)
+    if frame_numbers is not None and n_frames == n_bins:
+        # Indicator is indexed by frame (1-based) -> use index = frame_number - 1
+        # Clip to valid range in case of off-by-one or extra frames
+        ind_max = len(indicator) - 1
+        indices_0based = np.clip(frame_numbers - 1, 0, ind_max)
+        labels_raw = indicator[indices_0based]
+    else:
+        # Fallback: proportional resampling so output length matches n_bins
+        n_src = len(indicator)
+        idx = np.clip(
+            np.round(np.linspace(0, n_src - 1, n_bins)).astype(int), 0, n_src - 1
+        )
+        labels_raw = indicator[idx]
+
+    # Map to integer class indices 0, 1, ...
+    unique_vals = np.unique(labels_raw)
+    val_to_idx = {v: i for i, v in enumerate(unique_vals)}
+    labels = np.array([val_to_idx[v] for v in labels_raw], dtype=np.int64)
+    n_classes = len(unique_vals)
+    return labels, n_classes
+
 
 def get_unit_ids_for_patient_nwb(patient, brain_regions=None, data_dir_override=None):
     # Load nwb data file

@@ -1,6 +1,11 @@
 # DHV data loading and training
 
-PyTorch Lightning training pipeline for DHV NWB binned spike data: next-bin prediction with a small feedforward model. Supports single or multiple patients and optional buffer/fold-based train–val–test splits.
+PyTorch Lightning training pipeline for DHV NWB binned spike data. Supports two tasks:
+
+1. **Next-bin prediction** — predict the next bin’s spike counts from the current bin (regression).
+2. **Frame-label prediction** — predict an annotation label for each bin from binned spikes (classification).
+
+Single or multiple patients are supported, with optional buffer/fold-based train–val–test splits.
 
 ---
 
@@ -19,14 +24,14 @@ data_loading/
 ├── README.md
 ├── requirements-train.txt       # pip dependencies for training
 ├── train.py                     # training script (CLI entrypoint)
-├── model.py                     # LinearNextBin Lightning module
-├── dataloader.py                # DHVDataset, DHVDataModule (single/multi-patient, buffer/fold splits)
+├── model.py                     # LinearNextBin (regression), LinearLabel (classification)
+├── dataloader.py                # DHVDataset / DHVDatasetLabels, DHVDataModule / DHVDataModuleLabels
 ├── combine_header_images.py     # stacks frames.png + raster.png → fig/header.png
 ├── test.py
 ├── fig/                         # generated figure (header.png)
 └── nwb_loading/                 # NWB loading and binning
     ├── __init__.py
-    ├── nwb_loading.py           # load NWB, get movie edges, get binned spikes
+    ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
     └── binning.py               # spike binning with movie edges, pause handling
 ```
 
@@ -64,21 +69,42 @@ pip install -r data_loading/requirements-train.txt
 
 ---
 
+## Tasks
+
+### 1. Next-bin prediction (`--task next_bin`, default)
+
+- **Input:** binned spike counts for the current bin (one vector per bin).
+- **Target:** binned spike counts for the **next** bin.
+- **Model:** `LinearNextBin` — two linear layers, MSE loss.
+- **Use case:** predict future neural activity from the current time bin.
+
+### 2. Frame-label prediction (`--task label`)
+
+- **Input:** binned spike counts for one bin (one vector per bin).
+- **Target:** annotation label for that bin (e.g. presence of a scene or character).
+- **Model:** `LinearLabel` — two linear layers, output size = number of classes, CrossEntropy loss; logs accuracy.
+- **Use case:** decode stimulus annotations (e.g. “summer”, “alison”) from neural activity.
+- **Labels** come from the NWB `movie_annotations_indicator_functions` processing module. They are aligned to bins using frame numbers from `movie_binning_info` when available (bin lengths 40, 80, 200, 480, 1000 ms), so label length matches the binned spike vector.
+
+---
+
 ## Command-line arguments
 
 | Feature              | CLI argument     | Options / notes                                      |
 |----------------------|------------------|------------------------------------------------------|
+| **Task**             | `--task`         | `next_bin` (default) or `label`                      |
+| **Label name**       | `--label_name`   | Annotation name when `--task label` (e.g. `summer`). Default: `summer` |
 | Data directory       | `--data_dir`     | Path to folder with `sub{id}.nwb` (default: `/data`) |
 | Single NWB file      | `--nwb_path`     | Path to one NWB file (ignored if `--patient_ids` set)|
 | Patient IDs          | `--patient_ids`  | Space- or comma-separated, e.g. `14 20` or `14,20`   |
-| Bin length           | `--bin_length`   | ms, e.g. 40, 80, 100 (default: 40)                    |
+| Bin length           | `--bin_length`   | ms, e.g. 40, 80 (default: 80). For labels, frame mapping exists for 40, 80, 200, 480, 1000. |
 | Batch size           | `--batch_size`   | Default: 32                                          |
 | Max epochs           | `--max_epochs`   | Default: 20                                          |
 | Hidden size          | `--hidden_size`  | Default: 64                                           |
 | Learning rate        | `--lr`           | Default: 1e-3                                        |
 | Val fraction         | `--val_fraction` | 0–1; used only when `--buffer`/`--fold` not set (default: 0.1) |
-| Buffer (split)       | `--buffer`       | Seconds: 5,10,15,20,25,30,35,40,45,50,55. Requires `--fold`. |
-| Fold (split)         | `--fold`         | 1–5; which fold is val (and test from same layout). Requires `--buffer`. |
+| Buffer (split)       | `--buffer`       | Seconds: 5,10,15,20,25,30,35,40,45,50,55. Requires `--fold`. Default: 40. |
+| Fold (split)         | `--fold`         | 1–5; which fold is val (and test from same layout). Requires `--buffer`. Default: 1. |
 | Sequence (split)     | `--sequence`     | Two floats: past_sec future_sec (default: `3 1`)     |
 | DataLoader workers   | `--num_workers`  | Default: 0                                           |
 | Output directory     | `--output_dir`   | Default: `./lightning_logs`                           |
@@ -89,11 +115,14 @@ pip install -r data_loading/requirements-train.txt
 ## Output
 
 - Logs and checkpoints are written under **`./lightning_logs`** by default (override with `--output_dir`).
-- Subfolder structure: `lightning_logs/dhv/version_*/` (CSV logs, checkpoints if configured).
+- **Next-bin:** `lightning_logs/dhv/version_*/` (CSV logs, checkpoints if configured).
+- **Label:** `lightning_logs/dhv_label/version_*/` (train/val/test loss and accuracy).
 
 ---
 
 ## How to run
+
+### Next-bin prediction (default)
 
 **Single or multiple patients (fraction-based val split):**
 
@@ -107,7 +136,21 @@ python data_loading/train.py --patient_ids 14 20 --max_epochs 10
 python data_loading/train.py --patient_ids 14 20 --buffer 20 --fold 3 --sequence 5 2 --max_epochs 10
 ```
 
-**Single GPU:**
+### Frame-label prediction
+
+**Default label `summer`, one or more patients:**
+
+```bash
+python data_loading/train.py --task label --patient_ids 29 8 --max_epochs 10
+```
+
+**Another annotation (e.g. `alison`) with buffer/fold split:**
+
+```bash
+python data_loading/train.py --task label --label_name alison --patient_ids 29 8 --buffer 10 --fold 1 --max_epochs 10
+```
+
+**Single GPU (either task):**
 
 ```bash
 python data_loading/train.py --patient_ids 14 20 --devices 1 --max_epochs 10

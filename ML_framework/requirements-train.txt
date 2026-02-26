@@ -1,0 +1,5 @@
+# Dependencies for PyTorch Lightning training on DHV NWB data
+torch>=2.0
+pytorch-lightning>=2.0
+pynwb
+numpy

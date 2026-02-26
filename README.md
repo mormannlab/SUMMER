@@ -1,5 +1,8 @@
 # SUMMER — Single Unit activity during a Movie in the human Medial Temporal lobe via Electrophysiological Recordings
 
+[![DOI](https://zenodo.org/badge/992587225.svg)](https://doi.org/10.5281/zenodo.18790254)
+
+
 All code associated with the SUMMER dataset: NWB file generation, technical validation, movie stimulus synchronization, and result visualization. Implemented in Python and Matlab, with a conda environment file for reproducible setup.
 
 A module for local database initialization is included for users who prefer a database-driven workflow, along with a tutorial for integrating it into existing pipelines. For the ML community, the repository provides a complete baseline training pipeline to go from download to model training with minimal configuration.

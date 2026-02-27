@@ -78,4 +78,5 @@ dependencies:
   - zstd=1.5.5=hc292b87_0
   - pip:
       - invoke==2.2.0
+      - zetapy
 prefix: /home/al/miniconda3

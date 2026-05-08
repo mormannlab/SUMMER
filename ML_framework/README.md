@@ -26,10 +26,10 @@ ML_framework/
 ├── train.py                     # training script (CLI entrypoint)
 ├── model.py                     # LinearNextBin (regression), LinearLabel (classification)
 ├── dataloader.py                # SUMMERDataset, SUMMERDatasetLabels, SUMMERDataModule, SUMMERDataModuleLabels
-    └── nwb_loading/                 # NWB loading and binning
-        ├── __init__.py
-        ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
-        └── binning.py               # spike binning with movie edges, pause handling
+└── nwb_loading/                 # NWB loading and binning
+    ├── __init__.py
+    ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
+    └── binning.py               # spike binning with movie edges, pause handling
 ```
 
 ---

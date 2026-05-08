@@ -28,8 +28,8 @@ This program was written by Johannes Niediek, and last updated in 2019. The sour
 
 ### modified FFMPEG
 
-This program is a modified version of the open-source software [FFMPEG](https://www.ffmpeg.org/). FFMPEG is a suite of audio and video presentation tools. 
+This program is a modified version of the open-source software [FFmpeg](https://www.ffmpeg.org/). FFmpeg is a suite of audio and video presentation tools. 
 
-We altered the source code for the `FFPLAY` component to produce a log file tracking the frame presentation times. Once compiled, the movie is launched from the command line (e.g. `ffplay 500DaysOfSummer.avi`), which initiates a log file, `ffplay-watchlog-<YYYYMMDD-HHMMSS>.log`. This logfile tracks the presentation time stamps (PTS, time relative to the onset of the movie) and the local laptop time when the PTS was shown. It also tracks any interaction events, such as full-screening, pausing/playing, and rewinding/fast-forwarding. Note that the PTS indicates the frame id (frame index = PTS / frame rate). 
+We altered the source code for the `FFplay` component to produce a log file tracking the frame presentation times. Once compiled, the movie is launched from the command line (e.g. `ffplay 500DaysOfSummer.avi`), which initiates a log file, `ffplay-watchlog-<YYYYMMDD-HHMMSS>.log`. This logfile tracks the presentation time stamps (PTS, time relative to the onset of the movie) and the local laptop time when the PTS was shown. It also tracks any interaction events, such as full-screening, pausing/playing, and rewinding/fast-forwarding. Note that the PTS indicates the frame id (frame index = PTS / frame rate). 
 
 This program was originally modified to produce the watchlog by Johannes Niediek in 2012. It was updated by Alana Darcher in 2020 to fix an issue with the rewinding/fast-forwarding. 

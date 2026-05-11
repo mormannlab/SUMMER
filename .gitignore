@@ -6,6 +6,7 @@
 !**/annotations.svg
 !**/labels_indoor_new.svg
 !**/labels_outdoor_new.svg
+*.pdf
 *.pkl
 *.npy
 __pycache__/

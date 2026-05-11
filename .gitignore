@@ -1,6 +1,7 @@
 *.png
 !**/data_overview.png
 !**/nwb_overview.png
+!**/cv.png
 *.svg
 !**/annotations.svg
 !**/labels_indoor_new.svg

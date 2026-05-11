@@ -25,5 +25,6 @@ __pycache__/*
 scripts/
 lightning_logs/
 .devcontainer/
+data/
 
 paradigm_code/modified_ffmpeg/*

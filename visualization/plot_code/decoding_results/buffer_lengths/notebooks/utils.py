@@ -2,12 +2,14 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+from pathlib import Path
 
-import config_buffer as config
-print(f"Fontsize Labels Bar: {config.capsize_err}")
+PROJECT_ROOT = Path(__file__).resolve().parents[5]
+sys.path.insert(0, str(PROJECT_ROOT))
 
-import config_colors as config_colors
-from config_plot_params import *
+from visualization.plot_code.config_plot_params import *
+import visualization.plot_code.decoding_results.buffer_lengths.config_buffer as config
+import visualization.plot_code.config_colors as config_colors
 
 
 def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, save_path):

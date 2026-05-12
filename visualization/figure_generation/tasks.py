@@ -1,7 +1,7 @@
 from invoke import task
 from pathlib import Path
 
-basepath = Path.cwd()
+basepath = Path(__file__).resolve().parent
 
 open_cmd = "open"
 

@@ -3,8 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import random
+from pathlib import Path
+import os
+import sys
 
-from config_plot_params import *
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(PROJECT_ROOT))
+from visualization.plot_code.config_plot_params import *
 
 labelsize = 22
 

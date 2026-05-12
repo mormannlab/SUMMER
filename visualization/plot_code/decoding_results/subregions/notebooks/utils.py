@@ -2,13 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
-import seaborn as sns
-
-import config_characters as config
-import config_colors as config_colors
-from config_plot_params import *
-
+from pathlib import Path
 from matplotlib import font_manager as fm
+
+PROJECT_ROOT = Path(__file__).resolve().parents[5]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from visualization.plot_code.config_plot_params import *
+import visualization.plot_code.decoding_results.subregions.config_characters as config
+import visualization.plot_code.config_colors as config_colors
 
 # set global font to be Helvetica
 current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))

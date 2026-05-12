@@ -3,15 +3,17 @@ from matplotlib.patches import Patch
 import numpy as np
 import sys
 import os
-import seaborn as sns
+from matplotlib import font_manager as fm
+from pathlib import Path
 
-import config_decoding as config
+PROJECT_ROOT = Path(__file__).resolve().parents[5]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from visualization.plot_code.config_plot_params import *
+import visualization.plot_code.config_colors as config_colors
+import visualization.plot_code.decoding_results.decoding_results.config_decoding as config
 print(f"Fontsize Labels Bar: {config.capsize_err}")
 
-import config_colors as config_colors
-from config_plot_params import *
-
-from matplotlib import font_manager as fm
 # set global font to be Helvetica
 current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 helvetica_path = os.path.join(current_dir, 'fonts', 'Helvetica-Bold.ttf')

@@ -75,6 +75,8 @@ invoke convertpngpdf --fig decoding
 # Available figure keys: overview, sorting, annotations, SU, decoding, annotations_vis, data_splits
 ```
 
+Make sure to run this command from inside `visualization/figure_generation/`, as `tasks.py` resolves figure paths relative to its own location.
+
 Under the hood, `convertpngpdf` chains two steps:
 1. `_convertsvg2pdf` — calls Inkscape to render each `.svg` in the figure's `fig/` folder to `.pdf`
 2. `_convertpdf2png` — calls Inkscape to render each `.pdf` to `.png` at 600 dpi

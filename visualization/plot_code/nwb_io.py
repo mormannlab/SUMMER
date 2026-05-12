@@ -7,14 +7,8 @@ Copied from dhv_decoding/preprocessing/nwb_io.py
 Author: Alana Darcher, Uniklinikum Bonn
 Date: 15 May 2025
 """
-import os
-import sys
 import pickle
 from pathlib import Path
-
-path_location = os.getcwd()
-path_base = Path(*Path(path_location).parts[:-2])
-sys.path.append(path_base)
 
 from tqdm import tqdm
 import numpy as np

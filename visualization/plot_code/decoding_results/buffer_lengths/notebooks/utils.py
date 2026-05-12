@@ -12,7 +12,7 @@ import visualization.plot_code.decoding_results.buffer_lengths.config_buffer as 
 import visualization.plot_code.config_colors as config_colors
 
 
-def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, save_path):
+def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, save_path, panel_save_dir=None):
     # Define colors
     colors=[config.grey_color, config_colors.colors[0]]
 
@@ -67,4 +67,6 @@ def plot_buffer_lengths_evaluation(values, values_err, labels, metric, mode, sav
     plt.setp(ax.spines.values(), linewidth=config.linewidth_spines)
 
     plt.tight_layout()
-    plt.savefig(fname=os.path.join(save_path, f"{mode}", f"buffer_lengths.jpg"), bbox_inches='tight')
+    plt.savefig(fname=os.path.join(save_path, f"{mode}", f"buffer_lengths.png"), bbox_inches='tight')
+    if panel_save_dir is not None:
+        plt.savefig(panel_save_dir / "buffer_lengths.png", bbox_inches='tight', dpi=300)

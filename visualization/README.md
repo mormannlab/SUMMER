@@ -72,7 +72,7 @@ Notebooks for assembling and exporting publication figures. Each subfolder corre
 # Convert a specific figure SVG → PDF → PNG (600 dpi, white background)
 invoke convertpngpdf --fig decoding
 
-# Available figure keys: overview, sorting, annotations, SU, decoding, annotations_vis, data_splits
+# Available figure keys: overview, sorting, annotations, SU, decoding, annotations_vis, data_splits (see defined in tasks.py)
 ```
 
 Make sure to run this command from inside `visualization/figure_generation/`, as `tasks.py` resolves figure paths relative to its own location.

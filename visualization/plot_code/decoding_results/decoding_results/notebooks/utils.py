@@ -22,7 +22,7 @@ print("Loaded font name:", font_prop.get_name())
 fm.fontManager.addfont(helvetica_path)
 rc('font', family=font_prop.get_name())
 
-def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0):
+def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.0, panel_save_dir=None):
     
     # COLORS FULL
     #color_character = config.character_color
@@ -130,3 +130,6 @@ def plot_decoding(values, values_err, metric, labels, save_path, ymin=0, ymax=1.
     elif metric=="AUROC":
         name= 'auroc'
     plt.savefig(fname=os.path.join(save_path, f"decoding.jpg"), bbox_inches='tight', dpi=600)
+    if panel_save_dir is not None:
+        plt.savefig(panel_save_dir / "decoding.png", bbox_inches='tight', dpi=300)
+        #plt.savefig(panel_save_dir / "decoding.svg", bbox_inches='tight', dpi=300)

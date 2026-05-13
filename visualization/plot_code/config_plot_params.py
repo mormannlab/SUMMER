@@ -3,11 +3,7 @@
 """
 Parameters for plot creation, e.g. height/width ratios, fig sizes, etc.
 """
-import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '..', )))
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '..', '..')))
-
 from matplotlib import font_manager as fm
 from matplotlib import rc
 

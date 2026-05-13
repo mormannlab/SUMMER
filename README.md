@@ -18,7 +18,7 @@ A module for local database initialization is included for users who prefer a da
 ## Folder structure
 
 ```
-dhv_dev/
+SUMMER/
 ├── README.md
 ├── config_paths.py                  # shared path configuration
 ├── environment.yml                  # conda environment (with builds)
@@ -73,7 +73,7 @@ The **`nwb_generation/`** folder contains utilities for building the NWB files f
 The **`stats/`** subdirectory includes the modules used to calculate the spike sorting metrics.
 The `write_nwb.py` contains the classes used to build the various containers and elements of the NWB files. The `write_nwb.ipynb` combines these classes to build each file. 
 
-Note: the nwb generation code is included for demonstartion purposes. 
+Note: the NWB generation code is included for demonstration purposes. 
 
 ---
 

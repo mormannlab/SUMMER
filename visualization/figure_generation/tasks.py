@@ -1,7 +1,7 @@
 from invoke import task
 from pathlib import Path
 
-basepath = Path.cwd()
+basepath = Path(__file__).resolve().parent
 
 open_cmd = "open"
 
@@ -26,10 +26,6 @@ def convertpngpdf(c, fig):
 ########################################################################################
 @task
 def _convertsvg2pdf(c, fig):
-    if fig is None:
-        for f in range(len(fig_names)):
-            _convert_svg2pdf(c, str(f + 1))
-        return
     pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.svg")
     for path in pathlist:
         c.run(f"inkscape {str(path)} --export-pdf={str(path)[:-4]}.pdf")
@@ -37,10 +33,6 @@ def _convertsvg2pdf(c, fig):
 
 @task
 def _convertpdf2png(c, fig):
-    if fig is None:
-        for f in range(len(fig_names)):
-            _convert_pdf2png(c, str(f + 1))
-        return
     pathlist = Path(f"{basepath}/{fig_names[fig]}/fig/").glob("*.pdf")
     for path in pathlist:
         c.run(

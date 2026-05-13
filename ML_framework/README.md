@@ -26,10 +26,10 @@ ML_framework/
 ├── train.py                     # training script (CLI entrypoint)
 ├── model.py                     # LinearNextBin (regression), LinearLabel (classification)
 ├── dataloader.py                # SUMMERDataset, SUMMERDatasetLabels, SUMMERDataModule, SUMMERDataModuleLabels
-    └── nwb_loading/                 # NWB loading and binning
-        ├── __init__.py
-        ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
-        └── binning.py               # spike binning with movie edges, pause handling
+└── nwb_loading/                 # NWB loading and binning
+    ├── __init__.py
+    ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
+    └── binning.py               # spike binning with movie edges, pause handling
 ```
 
 ---
@@ -137,14 +137,14 @@ python ML_framework/train.py --patient_ids 14 20 --buffer 20 --fold 3 --sequence
 
 **Default label `summer`, one or more patients:**
 
-```bash
-python ML_framework/train.py --task label --patient_ids 29 8 --max_epochs 10
+```bash 
+python ML_framework/train.py --task label --patient_ids 14 20 --max_epochs 10
 ```
 
 **Another annotation (e.g. `alison`) with buffer/fold split:**
 
 ```bash
-python ML_framework/train.py --task label --label_name alison --patient_ids 29 8 --buffer 10 --fold 1 --max_epochs 10
+python ML_framework/train.py --task label --label_name alison --patient_ids 14 20 --buffer 12 --fold 1 --max_epochs 10
 ```
 
 **Single GPU (either task):**

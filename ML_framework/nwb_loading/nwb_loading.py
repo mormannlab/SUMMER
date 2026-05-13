@@ -41,7 +41,7 @@ def get_movie_edges(nwb_data, bin_length):
     Returns:
         np.ndarray: Movie edges for histogram binning.
     """
-    df_nwb = nwb_data.processing["movie_binning"].data_interfaces["movie_binning_info"].to_dataframe()
+    df_nwb = nwb_data.processing["misc"].data_interfaces["movie_binning_info"].to_dataframe()
     matches = df_nwb.loc[df_nwb["bin_length"] == bin_length]
     if len(matches) == 0:
         available = df_nwb["bin_length"].unique().tolist()
@@ -140,12 +140,7 @@ def _get_movie_frames_for_bin_length(nwb_data, bin_length):
     Get the array of frame identifiers for the given bin_length from movie_binning.
     Returns (frame_numbers, n_bins) where frame_numbers are 1-based, or (None, None) if not available.
     """
-    if "movie_binning" not in nwb_data.processing:
-        return None, None
-    try:
-        iface = nwb_data.processing["movie_binning"].data_interfaces["movie_binning_info"]
-    except KeyError:
-        return None, None
+    iface = nwb_data.processing["misc"].data_interfaces["movie_binning_info"] # adapted
     df = iface.to_dataframe()
     # Prefer exact match; bin_length in file may be int (40, 80, ...)
     matches = df.loc[df["bin_length"] == bin_length]
@@ -186,12 +181,7 @@ def get_annotation_labels_nwb(patient, label_name, bin_length, data_dir=None):
     movie_edges = get_movie_edges(nwb_data, bin_length)
     n_bins = len(movie_edges) - 1
 
-    if "movie_annotations_indicator_functions" not in nwb_data.processing:
-        raise KeyError(
-            "NWB file has no processing['movie_annotations_indicator_functions']; "
-            "cannot load annotation labels."
-        )
-    iface = nwb_data.processing["movie_annotations_indicator_functions"].data_interfaces[
+    iface = nwb_data.processing["misc"].data_interfaces[
         "movie_annotations_indicator_functions"
     ]
     df = iface.to_dataframe()

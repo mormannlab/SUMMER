@@ -72,7 +72,6 @@ def create_data_overview(data_dir):
         i += 1
     return df_patient_overview
 
-
 class UnitRegionDataCollectorNWB:
     """
     Collect the region information for each unit from the pandas DataFrame overview of NWB-formatted datasets.
@@ -94,7 +93,6 @@ class UnitRegionDataCollectorNWB:
     
     def get_total_nm_units_per_patient(self):
         return [len(l) for l in self.all_units]
-
 
 class UnitRegionDataProcessor:
     def __init__(self, data_collector):

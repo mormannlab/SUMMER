@@ -2,13 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
-import seaborn as sns
-
-import config_characters as config
-import config_colors as config_colors
-from config_plot_params import *
-
+from pathlib import Path
 from matplotlib import font_manager as fm
+
+PROJECT_ROOT = Path(__file__).resolve().parents[5]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from visualization.plot_code.config_plot_params import *
+import visualization.plot_code.decoding_results.subregions.config_characters as config
+import visualization.plot_code.config_colors as config_colors
 
 # set global font to be Helvetica
 current_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -18,7 +20,7 @@ print("Loaded font name:", font_prop.get_name())
 fm.fontManager.addfont(helvetica_path)
 rc('font', family=font_prop.get_name())
 
-def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, save_name, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0):
+def regional_differences(values, values_err, metric, buffer, label_names, title, save_path, save_name, legend=True, fig_x=None, fig_y=None, ymax=1, ymin=0, panel_save_dir=None):
 
     # Define colors
     colors = [config_colors.colors[0], config_colors.color_by_region["A"], config_colors.color_by_region["H"], config_colors.color_by_region["EC"], config_colors.color_by_region["PHC"]]
@@ -89,4 +91,6 @@ def regional_differences(values, values_err, metric, buffer, label_names, title,
         name= 'auroc'
     
     #os.makedirs(os.path.join(save_path, f"BUFFER{buffer}"), exist_ok=True)
-    plt.savefig(fname=os.path.join(save_path, f"{save_name}.jpg"), dpi=600)
+    plt.savefig(fname=os.path.join(save_path, f"{save_name}.png"), bbox_inches='tight', dpi=600)
+    if panel_save_dir is not None:
+        plt.savefig(panel_save_dir / f"{save_name}.png", bbox_inches='tight', dpi=300)

@@ -77,7 +77,7 @@ To quickly check out the dataset and the analysis:
 
 2. Download the data files from [DANDI](https://dandiarchive.org/dandiset/001616/).
 
-3. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages (conda version 26.1):  `conda env create -f environment_no_builds.yml`
+3. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages (conda version >24 and <26.1):  `conda env create -f environment_no_builds.yml`
 
 4. Activate your conda environment: `conda activate summer`
 

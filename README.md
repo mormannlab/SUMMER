@@ -68,6 +68,16 @@ SUMMER/
         └── binning.py
 ```
 
+## Quick Start Guide
+
+To quickly check out the dataset and the analysis:
+
+1. Clone this repository locally.
+2. Download the data files from [DANDI](https://dandiarchive.org/dandiset/001616/).
+3. Save the NWB files to the folder `SUMMER/data/` in this repository, or set the `NWB_data_dir` to the save location in `SUMMER/config_paths.py.
+4. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages:  `conda env create -f environment_no_builds.yml`
+5. Check out the Jupyter notebooks in `SUMMER/visualization/` to get a feel for the data!
+
 ---
 
 ## NWB & Stats
@@ -139,3 +149,4 @@ pre-commit install
 ```
 
 After that, the hook runs automatically on `git commit`. If it strips outputs from any notebook, stage the updated files and commit again.
+

@@ -1,4 +1,4 @@
-name: base
+name: summer
 channels:
   - defaults
 dependencies:

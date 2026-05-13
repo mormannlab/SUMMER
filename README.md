@@ -23,6 +23,7 @@ SUMMER/
 ├── config_paths.py                  # shared path configuration
 ├── environment.yml                  # conda environment (with builds)
 ├── environment_no_builds.yml        # conda environment (no builds)
+├── data/                            # placeholder for the NWB files
 ├── movie_wrapper/                   # wrappers for accessing the movie database
 │   ├── README.md
 │   └── wrapper.py
@@ -73,9 +74,17 @@ SUMMER/
 To quickly check out the dataset and the analysis:
 
 1. Clone this repository locally.
+
 2. Download the data files from [DANDI](https://dandiarchive.org/dandiset/001616/).
-3. Save the NWB files to the folder `SUMMER/data/` in this repository, or set the `NWB_data_dir` to the save location in `SUMMER/config_paths.py.
-4. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages:  `conda env create -f environment_no_builds.yml`
+
+3. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages (conda version 26.1):  `conda env create -f environment_no_builds.yml`
+
+4. Activate your conda environment: `conda activate summer`
+
+5. Get the data! You can download the data directly to a pre-set location in this repository using this command: `dandi download DANDI:001616 --output-dir data` 
+
+   If you want to save the data elsewhere, you can download the data from the [DANDI archive](https://dandiarchive.org/dandiset/001616) directly and just update the `NWB_data_dir` variable in `SUMMER/config_paths.py` to your data location.
+
 5. Check out the Jupyter notebooks in `SUMMER/visualization/` to get a feel for the data!
 
 ---

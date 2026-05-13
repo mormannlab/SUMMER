@@ -79,4 +79,5 @@ dependencies:
   - pip:
       - invoke==2.2.0
       - zetapy
+      - dandi>=0.74.0
 prefix: /home/al/miniconda3

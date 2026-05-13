@@ -96,8 +96,18 @@ def get_aligned_annotation(data_dir, patient_id, label_name, key):
     return starts, stops
 
 def load_patient(data_dir, patient_id,):
-    path = Path(data_dir, f"sub{int(patient_id)}.nwb")
-    io = NWBHDF5IO(path, mode="r")
+    """Loads the NWB file for a given patient and returns the NWB file object.
+        Expects the naming conventions assigned by NWB/DANDI 'sub-{patient_id}.nwb'.
+    """    
+    path = Path(data_dir).glob(f"sub-{int(patient_id)}*.nwb")
+
+    if len(list(path)) == 0:
+        path = Path(data_dir, f"sub-{int(patient_id)}")
+        path = path.glob(f"sub-{int(patient_id)}*.nwb")
+        
+    filepath = list(path)[0]
+
+    io = NWBHDF5IO(filepath, mode="r")
     nwbfile = io.read()
     return nwbfile
 

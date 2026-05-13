@@ -33,6 +33,10 @@ SUMMER/
 │   ├── static_info.py
 │   ├── write_nwb.py                 # classes for creating nwb files
 │   ├── write_nwb.ipynb              # runner for building nwb files
+├── paradigm_code/                   # code used to run the experiment
+│   ├── README.md
+│   ├── modified_ffmpeg.zip          # compressed base code for the modified FFplay version
+│   └── timedDAQ                     # clocking application, compiled executable file
 ├── visualization/                   # plot code and figure generation
 │   ├── figure_generation/           # svgutils-based panel assembly
 │   │   ├── figure_annotations_vis/

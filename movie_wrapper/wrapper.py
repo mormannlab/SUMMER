@@ -1,4 +1,8 @@
+import subprocess
+from pathlib import Path
+
 import numpy as np
+
 
 def wrapper_dvd(frame_number):
     """
@@ -64,3 +68,4 @@ def wrapper_hd(frame_number):
         new_frame_number = -1
         
     return new_frame_number
+

@@ -33,12 +33,11 @@ from pynwb.epoch import TimeIntervals
 
 import mat73
 
-from session_infos import *
+from session_info import *
 from stats.cell_type import SpikeWidth
 from stats.metrics import calc_cv2, calculate_snr, count_isi_violations
 from nwb_generation.utils.data_io import *
 from utils.process_labels import *
-from static_info import *
 
 class SessionInfo:
     """

@@ -4,6 +4,14 @@ Utilities for synchronizing frame numbers across different versions of the movie
 
 The original movie has **125,743 frames**. Because the DVD and HD releases differ in frame layout (chapter breaks, skipped frames), `wrapper.py` provides functions to map any original frame number to its equivalent in each version.
 
+## Official DVD release
+
+The official DVD release corresponds to identifier **<span style="color:red">XXX</span>**. It introduces a chapter break at frame 108 232 but otherwise preserves the original frame order.
+
+## Official HD release
+
+The official HD release corresponds to identifier **<span style="color:red">XXX</span>**. Compared to the original, it has a small initial offset, 16 single-frame skips distributed across chapters, and truncates the final segment (frames ≥ 125 730 are not present).
+
 ---
 
 <p align="center">

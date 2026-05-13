@@ -547,7 +547,7 @@ class PatientNWB:
         name="units", 
         waveform_rate=self.sr,
         waveform_unit="microvolts", 
-        description=f"Spike times (milliseconds), waveforms (uV), and associated spike sorting metrics for {self.sub_id}'s movie session."
+        description=f"Spike times (milliseconds), waveforms (uV), and associated spike sorting metrics for {self.sub_id}'s movie session. Spike times are reference to the start of the movie, such that a spike time == 0 would indicate a spike at the exact onset of the movie."
         )
         self.logger.info("Unit table created.")
 
@@ -570,7 +570,7 @@ class PatientNWB:
         annotations_patient_aligned = TimeIntervals(
                 name="annotations_patient_aligned",
                                 description=("Annotation data for the labeled movie features, aligned to the watchlog of a given participant (handles pauses in movie playback). Can be non-monotonic due to patient-led skips in playbak. Time given in milliseconds. "
-                            "Contents: starts: onset of a labeled segment, stops: offset of the labeled segment, values: whether the feature was present in the labeled segment (1) or not (0)")
+                            " Contents: starts: onset of a labeled segment, stops: offset of the labeled segment, values: whether the feature was present in the labeled segment (1) or not (0)")
                         )
         
         annotations_patient_aligned.add_column(
@@ -595,7 +595,7 @@ class PatientNWB:
         annotations_base = TimeIntervals(
             name="annotations_base",
             description=("Annotation data for the labeled movie features, aligned to directly to the movie, given in presentation time stamps (seconds)."
-                        "Contents: starts: onset of a labeled segment, stops: offset of the labeled segment, values: whether the feature was present in the labeled segment (1) or not (0)")
+                        " Contents: starts: onset of a labeled segment, stops: offset of the labeled segment, values: whether the feature was present in the labeled segment (1) or not (0)")
                         )
 
         annotations_base.add_column(
@@ -616,7 +616,7 @@ class PatientNWB:
         return annotations_base
     
     def _init_processing_module(self):
-        mod = ProcessingModule(name="misc", description="movie annotation and frame information processed for machine learning applications")
+        mod = ProcessingModule(name="machine_learning", description="movie annotation and frame information processed for machine learning applications")
         self.nwbfile.add_processing_module(mod)
         self.logger.info("Processing table added.")
 
@@ -677,7 +677,7 @@ class PatientNWB:
             index=True
         )
 
-        mod = self.nwbfile.processing["misc"]
+        mod = self.nwbfile.processing["machine_learning"]
         mod.add(table)
 
         self.logger.info("Movie binning info populated.")
@@ -715,7 +715,7 @@ class PatientNWB:
             table.add_row(label_name=str(label).lower(), indicator_function=vec)
             print(sum(vec))
        
-        mod = self.nwbfile.processing["misc"]
+        mod = self.nwbfile.processing["machine_learning"]
         mod.add(table)
 
         self.logger.info("Movie anntation table populated.")

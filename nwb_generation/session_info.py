@@ -43,7 +43,7 @@ region_restriction = {
     "PPH": "PHC",
 }
 
-region_exclusion = ["TT", "Ta", "Tb", "T", "H", "I", "WM"] # H for Heschl's 
+region_exclusion = ["TT", "Ta", "Tb", "T","WM"] # T* - Tiefeelectroken; WM - white matter. 
 
 region_full_names = {
     "AH": "anterior hippocampus",

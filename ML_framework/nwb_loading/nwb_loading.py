@@ -19,17 +19,17 @@ def load_nwb(patient, data_dir=None):
         tuple: A tuple containing the loaded NWB file and the path to the NWB file.
     """
     base = Path(data_dir) if data_dir is not None else Path(DEFAULT_DATA_DIR)
+    paths = list(Path(base).glob(f"sub{int(patient)}*.nwb"))
 
-    path = Path(base).glob(f"sub-{int(patient)}*.nwb")
-
-    if len(list(path)) == 0:
+    if len(paths) == 0:
         path = Path(data_dir, f"sub-{int(patient)}")
         path = path.glob(f"sub-{int(patient)}*.nwb")
-    
-    nwb_file = list(path)[0]
-    
-    if not nwb_file.exists():
-        raise FileNotFoundError(f"NWB file for patient {patient} not found at {nwb_file}")
+
+    if len(paths) == 0:
+        raise FileNotFoundError(
+            f"NWB file for patient {patient} not found in {base}"
+        )
+    nwb_file = paths[0]
     
     io = NWBHDF5IO(nwb_file, mode="r")
     nwb_data = io.read()

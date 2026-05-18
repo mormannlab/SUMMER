@@ -92,6 +92,30 @@ To quickly check out the dataset and the analysis:
 
 ---
 
+## Data
+
+Download the NWB files from DANDI and place them in a folder named `data/` at the repository root:
+
+```
+SUMMER/
+├── data/
+│   ├── sub14.nwb
+│   ├── sub20.nwb
+│   └── ...
+```
+
+The NWB files follow the naming convention `sub{patient_id}.nwb`. The `data/` folder is not tracked by git.
+
+After downloading, set the path to your data folder in **`config_paths.py`**:
+
+```python
+NWB_data_dir = Path("data")  # or an absolute path to your data folder
+```
+
+This variable is used by the visualization notebooks and the ML training pipeline to locate the NWB files.
+
+---
+
 ## NWB & Stats
 
 The **`nwb_generation/`** folder contains utilities for building the NWB files from the original neural datasets. 

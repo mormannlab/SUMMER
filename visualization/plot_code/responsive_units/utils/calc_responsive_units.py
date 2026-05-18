@@ -25,6 +25,8 @@ import numpy as np
 import pandas as pd
 import tqdm
 from zetapy import zetatest
+from joblib import Parallel, delayed
+
 
 num_permutations = 1000
 
@@ -133,75 +135,85 @@ def df_formatter(reg_pvals, reg_act, alpha=0.001):
     lineplot_df = pd.DataFrame({"bin": bin_id, "FR": val, "sig": pval_cat})
     return lineplot_df
 
+
+def process_unit(unit_spikes, onsets, baseline_time, stimulus_time, num_permutations):
+    event_spikes = times_by_event(unit_spikes, onsets, baseline_time * -1, stimulus_time)
+    bins = np.arange(baseline_time * -1, stimulus_time + 1, 100)
+    binned_act = times_to_histogram(event_spikes, bins)
+    
+    s = np.array(unit_spikes) / 1000
+    e = np.array(onsets) / 1000
+    z = zetatest(s, e, 1, intResampNum=num_permutations)
+    pval = z[0]
+    
+    act_z = zscore(binned_act)
+    act_u = np.mean(act_z, axis=0)
+    return act_u, pval
+
 def identify_responses(df_unit_data, df_annotation, pat_subset, 
                        baseline_time=1000, stimulus_time=1000, 
-                       key=1, alpha=0.001):
-    
-    total = len(df_unit_data)
-    print("running zeta..")
-    # iterate over the units and calculate the response statistic
-    bins = np.arange(baseline_time*-1, stimulus_time + 1, 100)
-    reg_act = np.zeros((total, len(bins)-1))
+                       num_permutations=1000,
+                       key=1, alpha=0.001,
+                       parallelize=True):
+
+    bins = np.arange(baseline_time * -1, stimulus_time + 1, 100)
+
+    annotation_groups = dict(tuple(df_annotation.groupby("patient_id")))
+    unit_groups = dict(tuple(df_unit_data.groupby("patient_id")))
+
+    all_tasks = []
+    for patient_id in pat_subset:
+        df_ann = annotation_groups.get(patient_id)
+        if df_ann is None:
+            continue
+
+        starts = df_ann["start_time"].to_numpy()
+        stops  = df_ann["stop_time"].to_numpy()
+        values = df_ann["value"].to_numpy()
+        starts = starts[values == key]
+        stops  = stops[values == key]
+
+        onsets = [
+            starts[i] for i in range(1, len(starts))
+            if (starts[i] - baseline_time) > stops[i - 1]
+        ]
+
+        df_pat = unit_groups.get(patient_id)
+        if df_pat is None:
+            continue
+
+        for row in df_pat.itertuples():
+            all_tasks.append((row.spike_times, onsets))
+
+    total = len(all_tasks)
+    reg_act  = np.zeros((total, len(bins) - 1))
     reg_pvals = np.ones(total)
 
-    ind = 0
-    for patient_id in tqdm.tqdm(pat_subset):
+    print(f"running zeta on {total} units..")
 
+    if parallelize:
+        results = Parallel(n_jobs=-1, backend="loky")(
+            delayed(process_unit)(spikes, onsets, baseline_time, stimulus_time, num_permutations)
+            for spikes, onsets in tqdm.tqdm(all_tasks)
+        )
+    else:
+        results = [
+            process_unit(spikes, onsets, baseline_time, stimulus_time, num_permutations)
+            for spikes, onsets in tqdm.tqdm(all_tasks)
+        ]
 
-        print(patient_id)
-        
-        # restrict the annotations to that of the patient
-        df_annotations_patient = df_annotation[df_annotation["patient_id"]==patient_id]
-        starts = df_annotations_patient["start_time"].to_numpy()
-        stops = df_annotations_patient["stop_time"].to_numpy()
-        values = df_annotations_patient["value"].to_numpy()
+    for ind, (act_u, pval) in enumerate(results):
+        reg_act[ind, :]  = act_u
+        reg_pvals[ind]   = pval
 
-        starts = starts[values==key]
-        stops = stops[values==key]
-        # process the annotations to remove overlapping labels in the baseline 
-
-        stim_onset_times = []
-        for i in range(1, len(starts)):
-            on = starts[i]   
-            prev_off = stops[i-1]
-            baseline_start = on - baseline_time
-
-            if baseline_start > prev_off:
-                stim_onset_times.append(on)
-
-        onsets = stim_onset_times
-
-        df_patient_data = df_unit_data[df_unit_data["patient_id"]==patient_id]
-
-        for i, row in df_patient_data.iterrows():
-            unit_spikes = row.spike_times
-        
-            event_spikes = times_by_event(unit_spikes, onsets, baseline_time*-1, stimulus_time)
-            # bin
-            bins = np.arange(baseline_time*-1, stimulus_time + 1, 100)
-            binned_act = times_to_histogram(event_spikes, bins)
-            
-            # stats
-            s = np.array(unit_spikes) / 1000
-            e = np.array(onsets) / 1000
-            
-            z = zetatest(s, e, 1, intResampNum=num_permutations)
-            pval = z[0]
-            # norm -- currently norming to whole "trial", not baseline
-            act_z = zscore(binned_act)
-
-            # reduce to 2D vector
-            act_u = np.mean(act_z, axis=0)
-            reg_act[ind, :] = act_u
-            reg_pvals[ind] = pval
-            ind += 1
-
-    sort_inds = np.argsort(reg_pvals)
-
+    sort_inds    = np.argsort(reg_pvals)
     ct_sig_units = reg_pvals < alpha
-
-    start_ns = np.where(reg_pvals[sort_inds] > alpha)[0][0]
-    end_ns = np.where(reg_pvals[sort_inds] > alpha)[0][-1]
+    ns_mask = reg_pvals[sort_inds] > alpha
+    if ns_mask.any():
+        start_ns = np.where(ns_mask)[0][0]
+        end_ns   = np.where(ns_mask)[0][-1]
+    else:
+        start_ns = end_ns = None
 
     return reg_act, reg_pvals, sort_inds, ct_sig_units, start_ns, end_ns
 

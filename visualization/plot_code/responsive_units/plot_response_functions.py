@@ -78,7 +78,9 @@ def spike_amp_plot_asset(ax, waveform_mean, waveform_sem, n_spikes, cmap, invert
     else:
         ax.tick_params(axis='both', which='major', width=0)
 
-    aspect = np.diff(ax.get_xlim()) / np.diff(ax.get_ylim()) #force square ratio
+    xrange = ax.get_xlim()[1] - ax.get_xlim()[0]
+    yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+    aspect = xrange / yrange
     ax.set_aspect(aspect)
 
     return ax

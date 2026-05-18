@@ -164,7 +164,7 @@ def collect_all_annotation_data(data_dir, label):
         if path.is_dir():
             continue 
 
-        patient_id = int(path.name.split(".")[0][3:])
+        patient_id = int(path.name.split(".")[0].split("-")[1])
         print(f"  {patient_id}")
         io = NWBHDF5IO(path, mode="r")
         nwbfile = io.read()

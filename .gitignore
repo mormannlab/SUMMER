@@ -27,3 +27,5 @@ lightning_logs/
 .devcontainer/
 
 paradigm_code/modified_ffmpeg/*
+
+data/*

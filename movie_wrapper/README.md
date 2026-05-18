@@ -6,7 +6,7 @@ The original movie has **125,743 frames**. Because the DVD and HD releases diffe
 
 ## Official DVD release
 
-The official DVD release corresponds to identifier **<span style="color:red">XXX</span>**. It introduces a chapter break at frame 108 232 but otherwise preserves the original frame order.
+The official DVD release is the **Cine Project (2010 Release)** edition (EAN: 4010232049162, ASIN: B0030FXXLK). It introduces a chapter break at frame 108 232 but otherwise preserves the original frame order.
 
 ## Official HD release
 

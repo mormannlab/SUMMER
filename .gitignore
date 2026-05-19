@@ -2,6 +2,7 @@
 !**/data_overview.png
 !**/nwb_overview.png
 !**/cv.png
+!**/frame_annotations_example.png
 *.svg
 !**/annotations.svg
 !**/labels_indoor_new.svg

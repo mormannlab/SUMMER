@@ -87,7 +87,7 @@ To quickly check out the dataset and the analysis:
    `conda activate summer`
 
 5. Get the data! You can download the data directly to a pre-set location in this repository using this command: 
-   `dandi download DANDI:001616 --output-dir data` 
+   `dandi download DANDI:001616/0.260519.1133 --output-dir data` 
 
    If you want to save the data elsewhere, you can download the data from the [DANDI archive](https://dandiarchive.org/dandiset/001616) directly and just update the `NWB_data_dir` variable in `SUMMER/config_paths.py` to your data location.
 

@@ -30,3 +30,7 @@ data/
 paradigm_code/modified_ffmpeg/*
 
 data/*
+
+movie_wrapper/input/
+movie_wrapper/output/
+movie_wrapper/data/

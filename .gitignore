@@ -35,3 +35,4 @@ data/*
 movie_wrapper/input/
 movie_wrapper/output/
 movie_wrapper/data/
+movie_wrapper/map_frames.py.orig

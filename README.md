@@ -24,9 +24,12 @@ SUMMER/
 ├── environment.yml                  # conda environment (with builds)
 ├── environment_no_builds.yml        # conda environment (no builds)
 ├── data/                            # placeholder for the NWB files
-├── movie_wrapper/                   # wrappers for accessing the movie database
+├── movie_wrapper/                   # frame mapping and annotation visualization
 │   ├── README.md
-│   └── wrapper.py
+│   ├── wrapper.py                   # frame-number mapping (paradigm ↔ DVD)
+│   ├── map_frames.py               # extract & remap video frames via ffmpeg
+│   ├── visualize_movie_frames.py   # visualize a DVD frame with NWB annotations
+│   └── visualize_movie_frames.ipynb # example notebook
 ├── nwb_generation/                  # nwb file generators and associated stats code
 │   ├── stats/                       # scripts for spike sorting metrics
 │   ├── utils/                       # processing modules for nwb file creation
@@ -131,10 +134,10 @@ Note: the NWB generation code is included for demonstration purposes.
 
 The **`movie_wrapper/`** folder contains utilities for synchronizing frame numbers across different versions of the movie stimulus.
 
-The original movie has 125,743 frames. Because the DVD and HD releases differ in frame layout (chapter breaks, skipped frames), `wrapper.py` provides two functions to map any original frame number to its equivalent in each version:
+The original movie has 125,743 frames. Because the DVD release differs in frame layout (a chapter break introduces an offset), `wrapper.py` provides functions to map between original (paradigm) frame numbers and their DVD equivalents:
 
-- `wrapper_dvd(frame_number)` — converts an original frame number to the corresponding DVD frame number.
-- `wrapper_hd(frame_number)` — converts an original frame number to the corresponding HD frame number.
+- `wrapper_dvd(frame_number)` — converts a paradigm frame number to the corresponding DVD frame number.
+- `inverse_wrapper_dvd(dvd_frame_number)` — converts a DVD frame number back to the paradigm frame number.
 
 For more details, see **[movie_wrapper/README.md](movie_wrapper/README.md)**.
 

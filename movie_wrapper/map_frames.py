@@ -8,7 +8,6 @@ from .wrapper import *
 
 def map_frames(
     mp4_path: str | Path,
-    version: str,           # "dvd" or "hd"
     output_dir: str | Path,
     wrapper_fps: int = 25,  # fps assumption baked into the wrapper functions
 ) -> Path:
@@ -16,15 +15,8 @@ def map_frames(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    version = version.lower()
-    if version == "dvd":
-        wrapper = wrapper_dvd
-        total_frames = 125743
-    elif version == "hd":
-        wrapper = wrapper_hd
-        total_frames = 125743
-    else:
-        raise ValueError(f"version must be 'dvd' or 'hd', got {version!r}")
+    wrapper = wrapper_dvd
+    total_frames = 125743
 
     fps_result = subprocess.run(
         [
@@ -85,7 +77,7 @@ def map_frames(
 
             new_idx = wrapper(wrapper_idx)
 
-            if new_idx == -1:           # HD: frame absent in this version
+            if new_idx == -1:
                 skipped += 1
                 continue
 

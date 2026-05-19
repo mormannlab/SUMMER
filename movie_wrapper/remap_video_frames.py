@@ -34,7 +34,6 @@ def remap_video_frames(
     wrapper = wrapper_dvd
     total_frames = 125743
 
-    # ── Detect frame rate from source video ───────────────────────────────
     try:
         fps_result = subprocess.run(
             [
@@ -56,7 +55,7 @@ def remap_video_frames(
 
     print(f"Source FPS: {source_fps:.4f} (wrapper assumes {wrapper_fps} fps)")
 
-    # ── 1. Extract frames directly to output dir ──────────────────────────
+    # output frames
     ffmpeg_cmd = [
         "ffmpeg", "-y",
         "-i", str(video_path),
@@ -97,7 +96,6 @@ def remap_video_frames(
     n_frames_actual = len(source_frames)
     print(f"Extracted {n_frames_actual} frames from source video.")
 
-    # ── 2. Rename frames in-place according to wrapper mapping ────────────
     skipped = 0
     for src_idx, src_path in enumerate(source_frames):
         timestamp = src_idx / source_fps

@@ -24,7 +24,7 @@ The official DVD release is the **Cine Project (2010 Release)** edition (EAN: 40
 movie_wrapper/
 ├── README.md
 ├── wrapper.py                       # frame-number mapping (paradigm ↔ DVD)
-├── map_frames.py                    # extract & remap video frames via ffmpeg
+├── remap_video_frames.py            # extract & remap video frames via ffmpeg
 ├── visualize_movie_frames.py        # visualize a DVD frame with NWB annotations
 └── visualize_movie_frames.ipynb     # example notebook for the visualization
 ```
@@ -58,7 +58,7 @@ Inverts `wrapper_dvd`: given a DVD frame number, returns the paradigm frame numb
 - **Output:** the paradigm frame number (integer).
 - **Raises** `ValueError` if the DVD frame falls in the gap (97,212–108,231) with no paradigm equivalent.
 
-### `map_frames(mp4_path, output_dir, ...)` — `map_frames.py`
+### `remap_movie_frames(video_path, output_dir, ...)` — `remap_video_frames.py`
 
 Extracts all frames from a source video via ffmpeg and re-indexes them according to the DVD wrapper mapping, producing sequentially numbered PNGs in `output_dir`.
 

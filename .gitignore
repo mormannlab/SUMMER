@@ -1,4 +1,4 @@
-#*.png
+*.png
 !**/data_overview.png
 !**/nwb_overview.png
 !**/cv.png

@@ -19,57 +19,59 @@ A module for local database initialization is included for users who prefer a da
 
 ```
 SUMMER/
-├── README.md
-├── config_paths.py                  # shared path configuration
-├── environment.yml                  # conda environment (with builds)
-├── environment_no_builds.yml        # conda environment (no builds)
-├── data/                            # placeholder for the NWB files
-├── movie_wrapper/                   # frame mapping and annotation visualization
+├── data/                                # placeholder for the NWB files
+├── ML_framework/                        # PyTorch Lightning training pipeline
+│   ├── nwb_loading/                     # NWB loading and binning
+│   │   ├── binning.py
+│   │   └── nwb_loading.py
+│   ├── dataloader.py                    # datasets and data modules
+│   ├── model.py                         # LinearNextBin, LinearLabel models
 │   ├── README.md
-│   ├── wrapper.py                   # frame-number mapping (paradigm ↔ DVD)
-│   ├── map_frames.py               # extract & remap video frames via ffmpeg
-│   ├── visualize_movie_frames.py   # visualize a DVD frame with NWB annotations
-│   └── visualize_movie_frames.ipynb # example notebook
-├── nwb_generation/                  # nwb file generators and associated stats code
-│   ├── stats/                       # scripts for spike sorting metrics
-│   ├── utils/                       # processing modules for nwb file creation
+│   ├── requirements-train.txt
+│   └── train.py                         # training script (CLI entrypoint)
+├── movie_wrapper/                       # frame mapping and annotation visualization
+│   ├── imgs/
+│   ├── __init__.py
 │   ├── README.md
-│   ├── static_info.py
-│   ├── write_nwb.py                 # classes for creating nwb files
-│   ├── write_nwb.ipynb              # runner for building nwb files
-├── paradigm_code/                   # code used to run the experiment
+│   ├── remap_video_frames.py            # remap frames between movie versions
+│   ├── visualize_movie_frames.ipynb     # example notebook
+│   ├── visualize_movie_frames.py        # visualize a DVD frame with NWB annotations
+│   └── wrapper.py                       # map between paradigm and DVD frame numbers
+├── nwb_generation/                      # nwb file generators and associated stats code
+│   ├── stats/                           # scripts for spike sorting metrics
+│   ├── utils/                           # processing modules for nwb file creation
 │   ├── README.md
-│   ├── modified_ffmpeg.zip          # compressed base code for the modified FFplay version
-│   └── timedDAQ                     # clocking application, compiled executable file
-├── visualization/                   # plot code and figure generation
-│   ├── figure_generation/           # svgutils-based panel assembly
+│   ├── session_info.py                  # session metadata
+│   ├── write_nwb.ipynb                  # runner for building nwb files
+│   └── write_nwb.py                     # classes for creating nwb files
+├── paradigm_code/                       # code used to run the experiment
+│   ├── modified_ffmpeg.zip              # compressed base code for the modified FFplay version
+│   ├── README.md
+│   └── timedDAQ                         # clocking application, compiled executable file
+├── visualization/                       # plot code and figure generation
+│   ├── figure_generation/               # svgutils-based panel assembly
+│   │   ├── figure_annotations_overview/
 │   │   ├── figure_annotations_vis/
 │   │   ├── figure_data_overview/
 │   │   ├── figure_decoding_results/
 │   │   ├── figure_responsive_units/
 │   │   ├── figure_splits/
-│   │   └── tasks.py                 # invoke tasks (e.g. convertpngpdf)
-│   ├── header_img/                  # images used in the documentation
-│   └── plot_code/                   # scripts and config for individual plots
-│       ├── __init__.py
-│       ├── config_colors.py
-│       ├── config_plot_params.py
-│       ├── nwb_io.py
+│   │   └── tasks.py                     # invoke tasks (e.g. convertpngpdf)
+│   ├── header_img/                      # images used in the documentation
+│   └── plot_code/                       # scripts and config for individual plots
 │       ├── annotations_overview/
 │       ├── data_overview/
 │       ├── decoding_results/
+│       ├── fonts/
 │       ├── responsive_units/
 │       ├── spike_sorting/
-│       └── fonts/
-└── ML_framework/                    # PyTorch Lightning training pipeline
-    ├── README.md
-    ├── requirements-train.txt
-    ├── train.py                     # training script (CLI entrypoint)
-    ├── model.py                     # LinearNextBin, LinearLabel models
-    ├── dataloader.py                # datasets and data modules
-    └── nwb_loading/                 # NWB loading and binning
-        ├── nwb_loading.py
-        └── binning.py
+│       ├── __init__.py
+│       ├── config_colors.py
+│       ├── config_plot_params.py
+│       └── nwb_io.py
+├── config_paths.py                      # shared path configuration
+├── environment_no_builds.yml            # conda environment (no builds)
+└── README.md
 ```
 
 ## Quick Start Guide

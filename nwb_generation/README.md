@@ -13,20 +13,20 @@ NWB file generators and spike sorting metrics.
 ## Folder structure
 
 ```
-movie_wrapper/
-├── README.md                           # overview of contents and use
+nwb_generation/
 ├── stats/                              # modules for spike sorting metrics
 │   ├── cell_type.py                    # categorize single-neurons into pyramidal or interneuron
-|   ├── collect_mad_values.m            # collect median absolute deviation values from bandpassed channels*
-|   ├── get_continuous_data.m           # read in and format LFP from NCS (Neuralynx) data records*
-|   ├── median_absolute_deviation.m     # calculate median absolute deviation value
+│   ├── collect_mad_values.m            # collect median absolute deviation values from bandpassed channels*
+│   ├── get_continuous_data.m           # read in and format LFP from NCS (Neuralynx) data records*
+│   ├── median_absolute_deviation.m     # calculate median absolute deviation value
 │   └── metrics.py
 ├── utils/
-|   ├── data_io.py                      # misc. data handlers
+│   ├── data_io.py                      # misc. data handlers
 │   └── process_labels.py               # convert between indicator functions and start/stop/value version of annotations
-├── static_info.py                      # region names and label names
-├── write_nwb.py                        # main functions for building nwb files*
-└── write_nwb.ipynb                     # runner for building nwb files*
+├── README.md                           # overview of contents and use
+├── session_info.py                     # region names and label names
+├── write_nwb.ipynb                     # runner for building nwb files*
+└── write_nwb.py                        # main functions for building nwb files*
 ```
 
 Asterisk denotes files included for demonstration.

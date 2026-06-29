@@ -5,6 +5,7 @@
 !**/frame_annotations_example.png
 *.svg
 !**/annotations.svg
+!**/annotations_base_gantt.svg
 !**/labels_indoor_new.svg
 !**/labels_outdoor_new.svg
 *.pdf

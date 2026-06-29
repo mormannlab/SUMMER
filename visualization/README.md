@@ -10,23 +10,29 @@ The folder is split into two main parts: `plot_code/` for exploratory analysis p
 
 ```
 visualization/
-├── header_img/                 # images used in READMEs
-├── plot_code/                  # exploratory analysis plots
-│   ├── fonts/
-│   ├── annotations_overview/
-│   ├── data_overview/
-│   ├── decoding_results/
-│   │   ├── buffer_lengths/
-│   │   ├── decoding_results/
-│   │   └── subregions/
-│   ├── responsive_units/
-│   └── spike_sorting/
-└── figure_generation/          # publication figure assembly
-    ├── figure_annotations_vis/
-    ├── figure_data_overview/
-    ├── figure_decoding_results/
-    ├── figure_responsive_units/
-    └── figure_splits/
+├── figure_generation/                   # publication figure assembly
+│   ├── figure_annotations_overview/
+│   ├── figure_annotations_vis/
+│   ├── figure_data_overview/
+│   ├── figure_decoding_results/
+│   ├── figure_responsive_units/
+│   ├── figure_spike_sorting/ 
+│   └── figure_splits/
+├── header_img/                         # images used in READMEs
+└── plot_code/                          # exploratory analysis plots
+    ├── annotations_overview/
+    ├── data_overview/
+    ├── decoding_results/
+    │   ├── buffer_lengths/
+    │   ├── decoding_results/
+    │   └── subregions/
+    ├── fonts/
+    ├── responsive_units/
+    ├── spike_sorting/
+    ├── __init__.py
+    ├── config_colors.py                # shared color palette
+    ├── config_plot_params.py           # shared matplotlib style settings
+    └── nwb_io.py                       # NWB loading helpers for plotting
 ```
 
 ---

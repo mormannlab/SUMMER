@@ -20,16 +20,16 @@ Single or multiple patients are supported, with optional buffer/fold-based train
 
 ```
 ML_framework/
+├── nwb_loading/                 # NWB loading and binning
+│   ├── __init__.py
+│   ├── binning.py               # spike binning with movie edges, pause handling
+│   └── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
 ├── __init__.py
+├── dataloader.py                # SUMMERDataset, SUMMERDatasetLabels, SUMMERDataModule, SUMMERDataModuleLabels
+├── model.py                     # LinearNextBin (regression), LinearLabel (classification)
 ├── README.md
 ├── requirements-train.txt       # pip dependencies for training
-├── train.py                     # training script (CLI entrypoint)
-├── model.py                     # LinearNextBin (regression), LinearLabel (classification)
-├── dataloader.py                # SUMMERDataset, SUMMERDatasetLabels, SUMMERDataModule, SUMMERDataModuleLabels
-└── nwb_loading/                 # NWB loading and binning
-    ├── __init__.py
-    ├── nwb_loading.py           # load NWB, movie edges, binned spikes, annotation labels
-    └── binning.py               # spike binning with movie edges, pause handling
+└── train.py                     # training script (CLI entrypoint)
 ```
 
 ---

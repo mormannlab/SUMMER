@@ -22,11 +22,13 @@ The official DVD release is the **Cine Project (2010 Release)** edition (EAN: 40
 
 ```
 movie_wrapper/
+├── imgs/                            # comparison images used in the documentation
+├── __init__.py
 ├── README.md
-├── wrapper.py                       # frame-number mapping (paradigm ↔ DVD)
 ├── remap_video_frames.py            # extract & remap video frames via ffmpeg
+├── visualize_movie_frames.ipynb     # example notebook for the visualization
 ├── visualize_movie_frames.py        # visualize a DVD frame with NWB annotations
-└── visualize_movie_frames.ipynb     # example notebook for the visualization
+└── wrapper.py                       # frame-number mapping (paradigm ↔ DVD)
 ```
 
 ### Data setup

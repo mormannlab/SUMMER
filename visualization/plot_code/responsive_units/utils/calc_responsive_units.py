@@ -143,7 +143,7 @@ def process_unit(unit_spikes, onsets, baseline_time, stimulus_time, num_permutat
     
     s = np.array(unit_spikes) / 1000
     e = np.array(onsets) / 1000
-    z = zetatest(s, e, 1, intResampNum=num_permutations)
+    z = zetatest(s, e, 1, resampling_number=num_permutations)
     pval = z[0]
     
     act_z = zscore(binned_act)

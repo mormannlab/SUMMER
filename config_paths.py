@@ -7,4 +7,4 @@ import sys
 import os
 from pathlib import Path
 
-NWB_data_dir = Path("") # add path here
+NWB_data_dir = Path("data/") # add path here

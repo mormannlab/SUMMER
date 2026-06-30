@@ -28,11 +28,12 @@ __pycache__/*
 scripts/
 lightning_logs/
 .devcontainer/
-data/
+*.nwb
+data/001616/*
 
 paradigm_code/modified_ffmpeg/*
 
-data/*
+
 
 movie_wrapper/input/
 movie_wrapper/output/

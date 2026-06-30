@@ -1,7 +1,6 @@
 # SUMMER — Single Unit activity during a Movie in the human Medial Temporal lobe via Electrophysiological Recordings
 
-[![DOI](https://zenodo.org/badge/992587225.svg)](https://doi.org/10.5281/zenodo.18790254)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20328875.svg)](https://doi.org/10.5281/zenodo.20328875)
 
 All code associated with the SUMMER dataset: NWB file generation, technical validation, movie stimulus synchronization, and result visualization. Implemented in Python and Matlab, with a conda environment file for reproducible setup.
 
@@ -20,6 +19,8 @@ A module for local database initialization is included for users who prefer a da
 ```
 SUMMER/
 ├── data/                                # placeholder for the NWB files
+│   ├── README.md
+│   └── refactory_datafiles.py           # re-organize the DANDI-downloaded data into a flat hierarchy
 ├── ML_framework/                        # PyTorch Lightning training pipeline
 │   ├── nwb_loading/                     # NWB loading and binning
 │   │   ├── binning.py
@@ -80,20 +81,26 @@ To quickly check out the dataset and the analysis:
 
 1. Clone this repository locally.
 
-2. Download the data files from [DANDI](https://dandiarchive.org/dandiset/001616/).
-
-3. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages (conda version >24 and <26.1):  
+2. Create a [conda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) environment with the required packages (requires conda version >24 and <26.1):  
   `conda env create -f environment_no_builds.yml`
 
-4. Activate your conda environment: 
+3. Activate your conda environment: 
    `conda activate summer`
 
-5. Get the data! You can download the data directly to a pre-set location in this repository using this command: 
-   `dandi download DANDI:001616/0.260519.1133 --output-dir data` 
+4. Get the data! You can download the data directly to a pre-set location in this repository using this comman, run from `~/SUMMER/`: 
+   `dandi download DANDI:001616 --output-dir data` 
 
-   If you want to save the data elsewhere, you can download the data from the [DANDI archive](https://dandiarchive.org/dandiset/001616) directly and just update the `NWB_data_dir` variable in `SUMMER/config_paths.py` to your data location.
+   If you want to save the data elsewhere, you can download the data from the [DANDI archive](https://dandiarchive.org/dandiset/001616) directly. 
+   
+   Update the file, `SUMMER/config_paths.py`, so that the variable`NWB_data_dir` matches your data location.
 
-5. Check out the Jupyter notebooks in `SUMMER/visualization/` to get a feel for the data!
+5. Organize the NWB files downloaded from DANDI by running the following via command line:
+
+```python
+python3 data/refactor_datafiles.py # This re-organizes the data files into a flat hierarchy (i.e. moves them out of the subdirectories).
+```
+
+6. Check out the Jupyter notebooks in `SUMMER/visualization/` to explore the data!
 
 ---
 
@@ -104,14 +111,16 @@ Download the NWB files from DANDI and place them in a folder named `data/` at th
 ```
 SUMMER/
 ├── data/
-│   ├── sub14.nwb
-│   ├── sub20.nwb
+│   ├── sub-1_ses-sub1_ecephys.nwb
+│   ├── sub-2_ses-sub2_ecephys.nwb
 │   └── ...
 ```
 
-The NWB files follow the naming convention `sub{patient_id}.nwb`. The `data/` folder is not tracked by git.
+The NWB files follow the naming convention `sub-{patient_id}_ses-sub{patient_id}_ecephys.nwb`.
 
-After downloading, set the path to your data folder in **`config_paths.py`**:
+Following the Quick Start guide, the data is downloaded to this directory. 
+
+If you would like to use this repository with a different location, set the path to your data folder in **`config_paths.py`**:
 
 ```python
 NWB_data_dir = Path("data")  # or an absolute path to your data folder

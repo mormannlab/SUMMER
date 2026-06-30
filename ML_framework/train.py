@@ -141,7 +141,7 @@ def main():
     parser.add_argument("--label_name", type=str, default="summer",
                         help="Annotation label name from NWB (e.g. summer). Used when --task=label.")
     parser.add_argument("--nwb_path", type=str, default=None, help="Path to a single NWB file (e.g. sub14.nwb). Ignored if --patient_ids is set.")
-    parser.add_argument("--data_dir", type=str, default=DEFAULT_DATA_DIR, help="Directory containing sub{id}.nwb files (default: /data).")
+    parser.add_argument("--data_dir", type=str, default=DEFAULT_DATA_DIR, help="Directory containing sub-{id}_ses-sub{id}_ecephys.nwb files (default: /data).")
     parser.add_argument("--patient_ids", type=str, nargs="*", default=None, metavar="ID", help="Patient IDs to load and concatenate (e.g. 14 20). Uses data_dir. Default: single patient from nwb_path or sub14.")
     parser.add_argument("--bin_length", type=float, default=80, help="Bin length in ms")
     parser.add_argument("--batch_size", type=int, default=32)

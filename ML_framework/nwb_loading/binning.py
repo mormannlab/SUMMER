@@ -3,9 +3,6 @@ import numpy as np
 import warnings
 import sys
 
-
-warnings.warn("Loaded in the copy of the binning functions that lives outside the epiphyte environment! Make sure edits make it into the main function, this is a bad practice sorry.")
-
 def create_patient_edges(patient_pts, patient_rec, movie_edges):
     len_edges = len(movie_edges)
     # Create edges in patient specific rec time

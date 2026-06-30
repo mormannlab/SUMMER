@@ -7,4 +7,5 @@ import sys
 import os
 from pathlib import Path
 
-NWB_data_dir = Path("data/") # add path here
+PROJECT_ROOT = Path(__file__).resolve().parent
+NWB_data_dir = PROJECT_ROOT / "data" # modify path to data here

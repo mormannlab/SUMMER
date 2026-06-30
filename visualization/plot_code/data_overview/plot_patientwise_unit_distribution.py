@@ -51,7 +51,7 @@ def create_data_overview(data_dir):
         if path.is_dir():
             continue 
 
-        patient_id = int(path.name.split(".")[0][3:])
+        patient_id = int(path.name.split("-")[1].split("_")[0])
 
         print(patient_id)
 

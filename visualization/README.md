@@ -91,6 +91,6 @@ Under the hood, `convertpngpdf` chains two steps:
 
 ## Notes
 
-- `nwb_io.py` expects NWB files at `<data_dir>/sub{patient_id}.nwb` (default data directory: `/data`).
+- `nwb_io.py` expects NWB files at `<data_dir>/sub-{int(patient_id)}_ses-sub{int(patient_id)}_ecephys.nwb` (default data directory: `/data`).
 - `config_plot_params.py` loads a bundled Helvetica font from `plot_code/fonts/Helvetica.ttf`; ensure this file is present before importing.
 - Figure SVGs are saved inside each figure folder under `fig/` (not tracked by git).

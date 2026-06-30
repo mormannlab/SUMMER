@@ -61,7 +61,7 @@ pip install -r ML_framework/requirements-train.txt
 ## Data location
 
 - **Default data directory**: **`/data`** (inside the container).
-- NWB files are expected as `sub{id}.nwb` (e.g. `/data/sub14.nwb`, `/data/sub20.nwb`).
+- NWB files are expected as `sub-{id}_ses-sub{id}_ecephys.nwb` (e.g. `/data/sub-14_ses-sub14_ecephys.nwb`, `/data/sub-20_ses-sub20_ecephys.nwb`).
 - Override with `--data_dir` if your data lives elsewhere.
 
 ---
@@ -91,7 +91,7 @@ pip install -r ML_framework/requirements-train.txt
 |----------------------|------------------|------------------------------------------------------|
 | **Task**             | `--task`         | `next_bin` (default) or `label`                      |
 | **Label name**       | `--label_name`   | Annotation name when `--task label` (e.g. `summer`). Default: `summer` |
-| Data directory       | `--data_dir`     | Path to folder with `sub{id}.nwb` (default: `/data`) |
+| Data directory       | `--data_dir`     | Path to folder with `sub-{id}_ses-sub{id}_ecephys.nwb` (default: `/data`) |
 | Single NWB file      | `--nwb_path`     | Path to one NWB file (ignored if `--patient_ids` set)|
 | Patient IDs          | `--patient_ids`  | Space- or comma-separated, e.g. `14 20` or `14,20`   |
 | Bin length           | `--bin_length`   | ms, e.g. 40, 80 (default: 80). For labels, frame mapping exists for 40, 80, 200, 480, 1000. |

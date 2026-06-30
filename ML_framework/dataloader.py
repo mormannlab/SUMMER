@@ -78,8 +78,8 @@ class SUMMERDataset(Dataset):
     ):
         """
         Args:
-            nwb_path: Full path to a single NWB file (e.g. .../sub14.nwb). If given, overrides data_dir and patient_id.
-            data_dir: Directory containing sub{patient_id}.nwb. Used if nwb_path is None.
+            nwb_path: Full path to a single NWB file (e.g. .../sub-14_ses-sub14_ecephys.nwb). If given, overrides data_dir and patient_id.
+            data_dir: Directory containing sub-{patient_id}_ses-sub{patient_id}_ecephys.nwb. Used if nwb_path is None.
             patient_id: Single patient ID string (e.g. "14"). Used if nwb_path is None and patient_ids is None.
             patient_ids: List of patient ID strings (e.g. ["14", "20"]) to load and concatenate along units. Overrides patient_id when set.
             bin_length: Bin length in ms for spike binning. Default: 80.
@@ -164,7 +164,7 @@ class SUMMERDatasetLabels(Dataset):
         """
         Args:
             nwb_path: Full path to a single NWB file. If given, overrides data_dir and patient_id.
-            data_dir: Directory containing sub{patient_id}.nwb.
+            data_dir: Directory containing sub-{patient_id}_ses-sub{patient_id}_ecephys.nwb.
             patient_id: Single patient ID string.
             patient_ids: List of patient ID strings to concatenate along units.
             bin_length: Bin length in ms for spike binning. Default: 80.

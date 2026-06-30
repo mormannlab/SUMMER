@@ -38,7 +38,7 @@ def get_patient_spiking_activity(data_dir, patient_id, exclude_waveforms=False):
         pd.DataFrame: DataFrame containing all spike activity information 
     """
 
-    path = Path(data_dir , f"sub{int(patient_id)}.nwb")
+    path = Path(data_dir , f"sub-{int(patient_id)}_ses-sub{int(patient_id)}_ecephys.nwb")
     io = NWBHDF5IO(path, mode="r")
     nwbfile = io.read()
     df_units = nwbfile.units.to_dataframe()
@@ -77,7 +77,7 @@ def get_unit_from_patient_spiking_activity(df_units, unit_id, exclude_waveforms=
 
 def get_patient_aligned_annotations(data_dir, patient_id, ):
 
-    path = Path(data_dir, f"sub{int(patient_id)}.nwb")
+    path = Path(data_dir, f"sub-{int(patient_id)}_ses-sub{int(patient_id)}_ecephys.nwb")
     io = NWBHDF5IO(path, mode="r")
     nwbfile = io.read()
 
@@ -99,13 +99,13 @@ def load_patient(data_dir, patient_id,):
     """Loads the NWB file for a given patient and returns the NWB file object.
         Expects the naming conventions assigned by NWB/DANDI 'sub-{patient_id}.nwb'.
     """    
-    path = Path(data_dir).glob(f"sub-{int(patient_id)}*.nwb")
+    path = list(Path(data_dir).glob(f"sub-{int(patient_id)}_*.nwb"))
 
-    if len(list(path)) == 0:
+    if len(path) == 0:
         path = Path(data_dir, f"sub-{int(patient_id)}")
-        path = path.glob(f"sub-{int(patient_id)}*.nwb")
+        path = path.glob(f"sub-{int(patient_id)}_*.nwb")
         
-    filepath = list(path)[0]
+    filepath = path[0]
 
     io = NWBHDF5IO(filepath, mode="r")
     nwbfile = io.read()
@@ -160,12 +160,12 @@ def collect_all_annotation_data(data_dir, label):
     i = 0
     
     for path in tqdm(list(data_dir.glob("*.nwb"))):
-        print(path)
+        #print(path)
         if path.is_dir():
             continue 
 
-        patient_id = int(path.name.split(".")[0].split("-")[1])
-        print(f"  {patient_id}")
+        patient_id = int(path.name.split("-")[1].split("_")[0])
+        #print(f"  {patient_id}")
         io = NWBHDF5IO(path, mode="r")
         nwbfile = io.read()
         

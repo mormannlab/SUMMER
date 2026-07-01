@@ -1,7 +1,6 @@
 from pathlib import Path
 import numpy as np
 from pynwb import NWBHDF5IO
-import sys
 
 from .binning import *
 
@@ -19,11 +18,7 @@ def load_nwb(patient, data_dir=None):
         tuple: A tuple containing the loaded NWB file and the path to the NWB file.
     """
     base = Path(data_dir) if data_dir is not None else Path(DEFAULT_DATA_DIR)
-    paths = list(Path(base).glob(f"sub-{int(patient)}_*.nwb"))
-
-    if len(paths) == 0:
-        path = Path(data_dir, f"sub-{int(patient)}")
-        path = path.glob(f"sub-{int(patient)}_*.nwb")
+    paths = list(base.glob(f"sub-{int(patient)}_*.nwb"))
 
     if len(paths) == 0:
         raise FileNotFoundError(

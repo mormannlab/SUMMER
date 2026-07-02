@@ -1,6 +1,6 @@
 # SUMMER — Single Unit activity during a Movie in the human Medial Temporal lobe via Electrophysiological Recordings
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20328875.svg)](https://doi.org/10.5281/zenodo.20328875)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20328875.svg)](https://doi.org/10.5281/zenodo.20328875) <a href="https://doi.org/10.48324/dandi.001616/0.260702.0824"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/badge/dataset%20|%20DANDI%20ID-001616-A8656A.svg?size=xs&amp;mode=dark"><img alt="badge" src="https://shieldcn.dev/badge/dataset%20|%20DANDI%20ID-001616-A8656A.svg?size=xs&amp;mode=light"></picture></a>
 
 All code associated with the SUMMER dataset: NWB file generation, technical validation, movie stimulus synchronization, and result visualization. Implemented in Python and Matlab, with a conda environment file for reproducible setup.
 

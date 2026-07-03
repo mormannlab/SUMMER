@@ -20,7 +20,7 @@ A module for local database initialization is included for users who prefer a da
 SUMMER/
 ├── data/                                # placeholder for the NWB files
 │   ├── README.md
-│   └── refactory_datafiles.py           # re-organize the DANDI-downloaded data into a flat hierarchy
+│   └── refactor_datafiles.py           # re-organize the DANDI-downloaded data into a flat hierarchy
 ├── ML_framework/                        # PyTorch Lightning training pipeline
 │   ├── nwb_loading/                     # NWB loading and binning
 │   │   ├── binning.py
@@ -123,7 +123,7 @@ Following the Quick Start guide, the data is downloaded to this directory.
 If you would like to use this repository with a different location, set the path to your data folder in **`config_paths.py`**:
 
 ```python
-NWB_data_dir = Path("data")  # or an absolute path to your data folder
+NWB_data_dir = PROJECT_ROOT / "data"  # or an absolute path to your data folder
 ```
 
 This variable is used by the visualization notebooks and the ML training pipeline to locate the NWB files.
@@ -177,7 +177,7 @@ The **`ML_framework/`** folder folder provides a complete PyTorch Lightning trai
 - **Next-bin prediction** — predict the next bin's spike counts from the current bin (regression).
 - **Frame-label prediction** — predict an annotation label for each bin from binned spikes (classification).
 
-Supports single or multiple patients and optional buffer/fold-based train–val–test splits. Default: `bin_length=80` ms, `buffer=40` s, `fold=1`.
+Supports single or multiple patients and optional buffer/fold-based train–val–test splits. Default: `bin_length=80` ms, `buffer=32` s, `fold=1`.
 
 All requirements and configuration needed to get started are included. A training run can be launched with a single command:
 

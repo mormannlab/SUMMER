@@ -23,7 +23,7 @@ The complete set-up is given in the Quick Start Guide, ~/SUMMER/README.md.
 Assuming you have a conda environment set up, the steps to retrieve and organize the data are: 
 
 1. Download to this directory: `dandi download DANDI:001616 --output-dir data` 
-    Optionally: download elsewhere, and set the path in `~/SUMMER/config_path.py`.
+    Optionally: download elsewhere, and set the path in `~/SUMMER/config_paths.py`.
 
 2. Flatten the data to a single directory: `python3 refactor_datafiles.py`
 

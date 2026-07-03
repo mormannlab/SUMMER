@@ -20,7 +20,7 @@ A module for local database initialization is included for users who prefer a da
 SUMMER/
 ├── data/                                # placeholder for the NWB files
 │   ├── README.md
-│   └── refactor_datafiles.py           # re-organize the DANDI-downloaded data into a flat hierarchy
+│   └── refactor_datafiles.py            # re-organize the DANDI-downloaded data into a flat hierarchy
 ├── ML_framework/                        # PyTorch Lightning training pipeline
 │   ├── nwb_loading/                     # NWB loading and binning
 │   │   ├── binning.py

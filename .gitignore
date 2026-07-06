@@ -6,8 +6,8 @@
 *.svg
 !**/annotations.svg
 !**/annotations_base_gantt.svg
-!**/labels_indoor_new.svg
-!**/labels_outdoor_new.svg
+!**/labels_indoor.svg
+!**/labels_outdoor.svg
 *.pdf
 *.pkl
 *.npy
